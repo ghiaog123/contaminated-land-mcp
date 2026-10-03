@@ -168,4 +168,4 @@ The server exposes only its own four read-only tools. Threat model, redaction de
 
 ## License
 
-No licence file yet; all rights reserved by default.
+Code: MIT, see [LICENSE](LICENSE). The licence covers this repository only. The guidance documents are not included and keep their publishers' terms (see Data and licences above).
