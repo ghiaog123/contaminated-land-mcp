@@ -5,7 +5,7 @@ import asyncio
 import pytest
 from fastmcp import Client
 
-from site_assess import drafting, retrieval, screening, server
+from contaminated_land import drafting, retrieval, screening, server
 
 SRC = {"doc_id": "nepm-asc-b1", "page": 12, "table": "Table 1A(1)"}
 PASSAGE = {

@@ -8,8 +8,8 @@ import os
 import httpx
 import openai
 
-from site_assess.paths import ROOT
-from site_assess.types import LLMReply
+from contaminated_land.paths import ROOT
+from contaminated_land.types import LLMReply
 
 DEFAULT_MODEL = "deepseek/deepseek-v4.1-flash"
 BASE_URL = "https://openrouter.ai/api/v1"
@@ -33,9 +33,10 @@ def _dotenv(name: str) -> str | None:
 
 class LLM:
     def __init__(self, model: str | None = None, api_key: str | None = None, http_client: httpx.Client | None = None):
-        """model defaults to $SITE_ASSESS_MODEL then DEFAULT_MODEL; api_key to $OPENROUTER_API_KEY (then .env).
+        """model defaults to $CONTAMINATED_LAND_MODEL then DEFAULT_MODEL; api_key to $OPENROUTER_API_KEY (then .env).
         Raise MissingAPIKey (clear message, never the key) when no key and no http_client is given."""
-        self.model = model or os.environ.get("SITE_ASSESS_MODEL") or _dotenv("SITE_ASSESS_MODEL") or DEFAULT_MODEL
+        env = "CONTAMINATED_LAND_MODEL"
+        self.model = model or os.environ.get(env) or _dotenv(env) or DEFAULT_MODEL
         key = api_key or os.environ.get("OPENROUTER_API_KEY") or _dotenv("OPENROUTER_API_KEY")
         if not key:
             if http_client is None:

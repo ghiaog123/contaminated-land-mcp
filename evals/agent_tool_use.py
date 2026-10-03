@@ -1,5 +1,6 @@
 """Task 5: can a non-Claude model act as the MCP host? It gets user turns, calls the REAL server's tools over a real
-stdio subprocess (`uv run site-assess`, inspect's native MCP client) and answers. Cases: evals/golden/agent_cases.yaml.
+stdio subprocess (`uv run contaminated-land-mcp`, inspect's native MCP client) and answers.
+Cases: evals/golden/agent_cases.yaml.
 
   export OPENROUTER_API_KEY=...     # for the model under test; the server reads its own key from .env for draft_section
   uv run --frozen --no-sync inspect eval evals/agent_tool_use.py --model openrouter/qwen/qwen3.5-flash-02-23 \
@@ -49,7 +50,8 @@ def _matches(call: dict, exp: dict) -> bool:
 @solver
 def mcp_host():
     async def solve(state: TaskState, generate: Generate) -> TaskState:
-        server = mcp_server_stdio(command="uv", args=["--directory", str(ROOT), "run", "--frozen", "site-assess"])
+        server_args = ["--directory", str(ROOT), "run", "--frozen", "contaminated-land-mcp"]
+        server = mcp_server_stdio(command="uv", args=server_args)
         state.messages.insert(0, ChatMessageSystem(content=SYSTEM))
         async with server:  # one real stdio subprocess per sample
             state.tools = await server.tools()

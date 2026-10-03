@@ -1,7 +1,7 @@
 """Screening edge cases asserted on the committed synthetic demo data (docs/03-data.md)."""
 import pytest
 
-from site_assess.screening import list_criteria_sets, load_sites, screen
+from contaminated_land.screening import list_criteria_sets, load_sites, screen
 
 HIL_A, HIL_D, HSL = "hil-a-residential", "hil-d-commercial", "hsl-a-b-vapour-intrusion"
 
@@ -87,7 +87,7 @@ def test_value_errors(site, cs):
 
 
 def test_land_use_contradiction(monkeypatch):
-    import site_assess.screening as s
+    import contaminated_land.screening as s
     site = {"site_id": "DEMO-01", "land_use": "commercial-d", "soil_type": "sand"}
     monkeypatch.setattr(s, "load_sites", lambda: [site])
     with pytest.raises(ValueError, match="contradicts"):

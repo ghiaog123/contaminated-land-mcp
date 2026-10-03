@@ -54,7 +54,7 @@ Run `draft_section` for each demo site (DEMO-01 to DEMO-03) with each model unde
 |---|---|---|
 | Citation validity | Every `[chunk_id]` in the final markdown is among the passages supplied to the model. Reported twice: on the raw first model output, and on the returned draft after the validator. | No |
 | Number fidelity | Every number in the draft appears in the screening output for that site (value, ratio, counts), after format normalisation. | No |
-| Claim support | LLM judge, model from `SITE_ASSESS_JUDGE_MODEL`: for each sentence with a citation, is the claim supported by the cited passage? Per-sentence verdicts stored in the log. | Yes |
+| Claim support | LLM judge, model from `CONTAMINATED_LAND_JUDGE_MODEL`: for each sentence with a citation, is the claim supported by the cited passage? Per-sentence verdicts stored in the log. | Yes |
 | Facts support | Added 2026-10-03. The same judge checks every uncited prose sentence against the FACTS block (the screening output), so uncited sentences cannot escape both checks. | Yes |
 | Validator removals | Count of sentences removed and retries used, from `warnings`. Reported per model. | No |
 
@@ -121,7 +121,7 @@ Each row also records date, commit hash, inspect_ai version, and sampling settin
 |---|---|
 | inspect_ai version and MCP tool support | Unverified; check at build time |
 | Drafting model id | Open (D2) |
-| Judge model id | `SITE_ASSESS_JUDGE_MODEL`; provisionally `google/gemini-3.5-flash-lite` (Q12) |
+| Judge model id | `CONTAMINATED_LAND_JUDGE_MODEL`; provisionally `google/gemini-3.5-flash-lite` (Q12) |
 | Thresholds | Proposed above; owner to confirm |
 | Embedding model | `BAAI/bge-small-en-v1.5` via fastembed (Q11) |
 | Claude Sonnet comparison | Not run; owner chose cheap or free models only (Q2) |

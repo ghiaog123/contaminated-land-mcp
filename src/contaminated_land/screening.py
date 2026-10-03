@@ -11,8 +11,8 @@ from functools import cache, lru_cache
 
 import yaml
 
-from site_assess.paths import CRITERIA_DIR, LAB_DIR, SITES_YAML, SOURCES_YAML
-from site_assess.types import CriteriaSetInfo, Exceedance, NotScreened, ScreeningResult
+from contaminated_land.paths import CRITERIA_DIR, LAB_DIR, SITES_YAML, SOURCES_YAML
+from contaminated_land.types import CriteriaSetInfo, Exceedance, NotScreened, ScreeningResult
 
 # The only conversions the code performs: (lab unit, criterion unit) -> multiplier. Anything else is unit_mismatch.
 _UNIT_FACTORS = {

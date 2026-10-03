@@ -3,8 +3,8 @@ import json
 import httpx
 import pytest
 
-from site_assess import llm as llm_mod
-from site_assess.llm import DEFAULT_MODEL, LLM, MissingAPIKey
+from contaminated_land import llm as llm_mod
+from contaminated_land.llm import DEFAULT_MODEL, LLM, MissingAPIKey
 
 
 def chat_response(text: str, model: str = "mock/model") -> dict:
@@ -31,7 +31,7 @@ def mock_client(replies: list[str], seen: list | None = None) -> httpx.Client:
 
 @pytest.fixture(autouse=True)
 def clean_env(monkeypatch, tmp_path):
-    for k in ("OPENROUTER_API_KEY", "SITE_ASSESS_MODEL"):
+    for k in ("OPENROUTER_API_KEY", "CONTAMINATED_LAND_MODEL"):
         monkeypatch.delenv(k, raising=False)
     monkeypatch.setattr(llm_mod, "ROOT", tmp_path)  # no real .env
 
@@ -43,7 +43,7 @@ def test_missing_key_raises_without_leaking():
 
 def test_model_resolution(monkeypatch):
     assert LLM(http_client=mock_client([])).model == DEFAULT_MODEL
-    monkeypatch.setenv("SITE_ASSESS_MODEL", "env/model")
+    monkeypatch.setenv("CONTAMINATED_LAND_MODEL", "env/model")
     assert LLM(http_client=mock_client([])).model == "env/model"
     assert LLM(model="arg/model", http_client=mock_client([])).model == "arg/model"
 

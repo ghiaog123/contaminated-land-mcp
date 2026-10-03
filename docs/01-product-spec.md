@@ -1,4 +1,4 @@
-# Product spec: Site Assessment Assistant
+# Product spec: Contaminated Land MCP
 
 Status: draft, 2026-10-02. Docs only. No code yet.
 

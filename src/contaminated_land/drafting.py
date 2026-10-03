@@ -8,10 +8,10 @@ document titles and tables (false positives) for no privacy gain. Client identif
 import re
 from decimal import Decimal
 
-from site_assess import retrieval, screening
-from site_assess.llm import LLM
-from site_assess.redact import PLACEHOLDER, Redactor
-from site_assess.types import Citation, DraftResult, Passage, ScreeningResult, SectionType
+from contaminated_land import retrieval, screening
+from contaminated_land.llm import LLM
+from contaminated_land.redact import PLACEHOLDER, Redactor
+from contaminated_land.types import Citation, DraftResult, Passage, ScreeningResult, SectionType
 
 MAX_PASSAGES = 8
 DISCLAIMER = "\n\n*Draft for review. A qualified person must check every statement. Not a compliance assessment.*"

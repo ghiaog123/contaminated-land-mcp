@@ -34,14 +34,14 @@ Prices per million tokens, input / output, re-read from the OpenRouter catalog 2
 | OpenRouter id | In / out (USD) |
 |---|---|
 | `deepseek/deepseek-v4.1-flash` | 0.30 / 1.20 at the last check (image input supported); see the note above |
-| `stealth/space-bunny-alpha` | 0 / 0 (image input, 1M context). Used by the owner for local runs via `SITE_ASSESS_MODEL` in `.env`. The catalog lists an expiry of 2026-10-05; after that `SITE_ASSESS_MODEL` must go back to DeepSeek. Stealth models may log prompts; the demo data is fictional and redacted and the guidance documents are public |
+| `stealth/space-bunny-alpha` | 0 / 0 (image input, 1M context). Used by the owner for local runs via `CONTAMINATED_LAND_MODEL` in `.env`. The catalog lists an expiry of 2026-10-05; after that `CONTAMINATED_LAND_MODEL` must go back to DeepSeek. Stealth models may log prompts; the demo data is fictional and redacted and the guidance documents are public |
 | `google/gemini-3.5-flash-lite` | 0.30 / 2.50. Eval judge, provisional (Q12) |
 | `deepseek/deepseek-v4-pro` | 0.21 / 0.42 |
 | `deepseek/deepseek-v4-flash` | 0.028 / 0.056 |
 | `anthropic/claude-sonnet-5.5` | 2 / 10 |
 | `anthropic/claude-haiku-4.5` | 1 / 5 |
 
-Claude model ids current on 2026-10-02 (Anthropic naming): `claude-fable-5-1`, `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-4-5`. OpenRouter naming differs, for example `anthropic/claude-sonnet-5.5`. Use the OpenRouter form in `SITE_ASSESS_MODEL`.
+Claude model ids current on 2026-10-02 (Anthropic naming): `claude-fable-5-1`, `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-4-5`. OpenRouter naming differs, for example `anthropic/claude-sonnet-5.5`. Use the OpenRouter form in `CONTAMINATED_LAND_MODEL`.
 
 ## Rejected
 

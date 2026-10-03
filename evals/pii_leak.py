@@ -69,8 +69,8 @@ FIXED_PASSAGES = [
 @solver
 def draft_through_recorder(real: bool, offline: bool = False):
     async def solve(state: TaskState, generate: Generate) -> TaskState:
-        from site_assess import drafting, retrieval
-        from site_assess.llm import LLM
+        from contaminated_land import drafting, retrieval
+        from contaminated_land.llm import LLM
 
         if offline:
             retrieval.search = lambda *a, **k: list(
@@ -171,7 +171,7 @@ def pii_leak(real: bool = False, offline: bool = False):
     real, offline = (str(v).lower() in ("1", "true", "yes") for v in (real, offline))
     if real:
         require_key()
-    from site_assess.paths import LANCEDB_DIR, SITES_YAML
+    from contaminated_land.paths import LANCEDB_DIR, SITES_YAML
 
     if not offline and not LANCEDB_DIR.exists():
         raise SystemExit(f"search index missing at {LANCEDB_DIR}: run ingest/build_index.py, or pass -T offline=true.")

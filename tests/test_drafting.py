@@ -4,8 +4,8 @@ import httpx
 import pytest
 from test_llm import chat_response
 
-from site_assess import drafting, retrieval, screening
-from site_assess.llm import LLM
+from contaminated_land import drafting, retrieval, screening
+from contaminated_land.llm import LLM
 
 CLIENT, ADDRESS = "Acme Fuels Pty Ltd", "12 Smith Road, Parramatta NSW 2150"
 SITES = [

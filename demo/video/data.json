@@ -1,6 +1,6 @@
 {
   "_about": "Every value the video shows. Each block names its source; the HTML holds no numbers of its own.",
-  "title": "site-assessment-mcp",
+  "title": "contaminated-land-mcp",
   "tagline": "the host model picks the tools; the server checks the facts",
   "legend": [
     {
@@ -17,7 +17,7 @@
     }
   ],
   "host": {
-    "_source": "README.md, src/site_assess/server.py: stdio FastMCP server, any MCP client drives it",
+    "_source": "README.md, src/contaminated_land/server.py: stdio FastMCP server, any MCP client drives it",
     "name": "host model",
     "lines": [
       "any MCP client",
@@ -27,32 +27,32 @@
   },
   "tools": [
     {
-      "_source": "src/site_assess/server.py",
+      "_source": "src/contaminated_land/server.py",
       "name": "list_criteria_sets",
       "kind": "code",
       "does": "3 criteria sets"
     },
     {
-      "_source": "src/site_assess/server.py",
+      "_source": "src/contaminated_land/server.py",
       "name": "screen_lab_results",
       "kind": "code",
       "does": "compares every result in code"
     },
     {
-      "_source": "src/site_assess/server.py",
+      "_source": "src/contaminated_land/server.py",
       "name": "search_guidance",
       "kind": "code",
       "does": "hybrid search, local embeddings"
     },
     {
-      "_source": "src/site_assess/server.py:130, drafting.py:199",
+      "_source": "src/contaminated_land/server.py:130, drafting.py:199",
       "name": "draft_section",
       "kind": "llm",
       "does": "OpenRouter model writes prose"
     }
   ],
   "guard": {
-    "_source": "src/site_assess/drafting.py draft_section pipeline",
+    "_source": "src/contaminated_land/drafting.py draft_section pipeline",
     "title": "inside draft_section",
     "steps": [
       "facts from screening",
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "_source": "same log, turn 3 draft_section result; citations counted from the returned markdown; redaction from site_assess.redact on the DEMO-03 facts (data/lab/sites.yaml); calls = every tool call in that turn of the packet",
+      "_source": "same log, turn 3 draft_section result; citations counted from the returned markdown; redaction from contaminated_land.redact on the DEMO-03 facts (data/lab/sites.yaml); calls = every tool call in that turn of the packet",
       "user": "Draft the results section.",
       "call": "draft_section(site_id=\"DEMO-03\", criteria_set=\"hil-a-residential\")",
       "tool": "draft_section",
@@ -254,8 +254,8 @@
     "tests": "93 tests pass"
   },
   "status": {
-    "_source": "src/site_assess/llm.py (SITE_ASSESS_MODEL), fastembed local embeddings",
-    "left": "site-assess (stdio)",
+    "_source": "src/contaminated_land/llm.py (CONTAMINATED_LAND_MODEL), fastembed local embeddings",
+    "left": "contaminated-land-mcp (stdio)",
     "mid": "4 tools; 1 calls a model",
     "right": "embeddings: local"
   }

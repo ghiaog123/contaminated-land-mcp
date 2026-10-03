@@ -6,7 +6,7 @@ published, not hidden: fill the results table below from the logs, including cel
 Run everything from the repo root with the frozen environment. Keep logs out of the repo (`--log-dir`).
 
 ```bash
-LOGS=/tmp/site-assess-evals   # any directory outside the repo
+LOGS=/tmp/contaminated-land-mcp-evals   # any directory outside the repo
 alias ie='uv run --frozen --no-sync inspect eval'
 uv run --frozen --no-sync inspect list tasks evals    # sanity check: every task loads
 ```
@@ -32,7 +32,7 @@ ie evals/screening_exact.py --model mockllm/model --display plain --log-dir $LOG
 
 # 3. draft faithfulness (real model). Exits with a clear message when OPENROUTER_API_KEY is unset.
 export OPENROUTER_API_KEY=...                    # never commit it
-export SITE_ASSESS_JUDGE_MODEL=<openrouter id>   # optional; claim_support is skipped with a message if unset
+export CONTAMINATED_LAND_JUDGE_MODEL=<openrouter id>   # optional; claim_support is skipped with a message if unset
 ie evals/draft_faithfulness.py -T draft_model=deepseek/deepseek-v4.1-flash --model mockllm/model --display plain --log-dir $LOGS
 
 # 4. PII leak
@@ -40,14 +40,14 @@ ie evals/pii_leak.py -T offline=true --model mockllm/model --display plain --log
 ie evals/pii_leak.py --model mockllm/model --display plain --log-dir $LOGS                  # echo model, real retrieval (needs index)
 ie evals/pii_leak.py -T real=true --model mockllm/model --display plain --log-dir $LOGS     # recorded real OpenRouter traffic (needs key)
 
-# 5. agent tool use (real model as MCP host; real `uv run site-assess` stdio subprocess per sample; no judge)
+# 5. agent tool use (real model as MCP host; real `uv run contaminated-land-mcp` stdio subprocess per sample; no judge)
 export OPENROUTER_API_KEY=...
 ie evals/agent_tool_use.py --model openrouter/stealth/space-bunny-alpha --epochs 3 --max-connections 2 --retry-on-error 2 --display plain --log-dir $LOGS/agent
 uv run --frozen --no-sync python evals/extract_agent.py $LOGS/agent $GRADING/agent   # one markdown packet per case/epoch + summary.md
 ```
 
 `--model mockllm/model` only satisfies inspect: no task here asks inspect's model to generate. The model under
-test sits behind `site_assess.llm`, and the judge in `draft_faithfulness` is a separate `get_model` call.
+test sits behind `contaminated_land.llm`, and the judge in `draft_faithfulness` is a separate `get_model` call.
 
 ## What each task checks
 
@@ -69,7 +69,7 @@ test sits behind `site_assess.llm`, and the judge in `draft_faithfulness` is a s
   chunk's `[page, page_end]`; `run_ablation.py` also splits by `table` vs `narrative` questions.
 - `agent_tool_use`: the model under test (`--model openrouter/<id>`, temperature 0) acts as the MCP host. Cases in
   `golden/agent_cases.yaml` (turns, `expect_calls`, `forbid_tools`, manual `rubric`). Inspect's native MCP client
-  starts `uv run site-assess` over stdio per sample; up to 8 generate steps per turn. Scorer `tool_calls` is
+  starts `uv run contaminated-land-mcp` over stdio per sample; up to 8 generate steps per turn. Scorer `tool_calls` is
   deterministic: CORRECT iff every `expect_calls` entry is matched by some call (same tool, each listed arg equal)
   and no `forbid_tools` tool was called; metadata holds calls per turn, missing, forbidden, steps and tool errors.
   `tool_call_count` is the mean calls per case. Answer quality is NOT scored: `extract_agent.py` writes full

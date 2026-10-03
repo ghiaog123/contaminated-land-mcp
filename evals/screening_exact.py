@@ -1,4 +1,5 @@
-"""screening_exact: no LLM. Runs site_assess.screening.screen over hand-computed fixtures in evals/golden/screening/.
+"""screening_exact: no LLM. Runs contaminated_land.screening.screen
+over hand-computed fixtures in evals/golden/screening/.
 
 Each case folder holds sites.yaml, <site_id>.csv, expected.json and WORKING.md (the hand calculation).
 Scoring is exact: set of (sample_id, analyte) exceedances, ratio per exceedance, set of (sample_id, analyte, reason)
@@ -16,7 +17,7 @@ from inspect_ai.dataset import Sample
 from inspect_ai.scorer import CORRECT, INCORRECT, Score, Target, accuracy, scorer
 from inspect_ai.solver import Generate, TaskState, solver
 
-from site_assess import screening
+from contaminated_land import screening
 
 GOLDEN = Path(__file__).parent / "golden" / "screening"
 

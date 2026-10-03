@@ -1,5 +1,5 @@
 [project]
-name = "site-assess"
+name = "contaminated-land-mcp"
 version = "0.1.0"
 description = "MCP server for Claude: cited search over contaminated-land guidance, deterministic lab screening, guarded report drafting"
 readme = "README.md"
@@ -34,7 +34,7 @@ dev = [
 ]
 
 [project.scripts]
-site-assess = "site_assess.server:main"
+contaminated-land-mcp = "contaminated_land.server:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -49,3 +49,6 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.uv.build-backend]
+module-name = "contaminated_land"

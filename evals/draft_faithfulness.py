@@ -1,7 +1,7 @@
 """Task 3 (docs/04-evaluation.md): is the drafted section faithful to the screening output and the cited passages?
 
   export OPENROUTER_API_KEY=...            # required: this calls a real model
-  export SITE_ASSESS_JUDGE_MODEL=...       # optional OpenRouter model id for the claim_support judge (skipped if unset)
+  export CONTAMINATED_LAND_JUDGE_MODEL=...  # optional judge model for claim_support (skipped if unset)
   uv run --frozen --no-sync inspect eval evals/draft_faithfulness.py -T draft_model=deepseek/deepseek-v4.1-flash
 
 Scorers: citation_validity_raw (model's first reply vs the passages it was shown), citation_validity_final (returned
@@ -72,8 +72,8 @@ def _sentences(md: str):
 @solver
 def draft(draft_model: str | None):
     async def solve(state: TaskState, generate: Generate) -> TaskState:
-        from site_assess import drafting, screening
-        from site_assess.llm import LLM
+        from contaminated_land import drafting, screening
+        from contaminated_land.llm import LLM
 
         rec = RecordingTransport(httpx.HTTPTransport())
         sid, cs = state.metadata["site_id"], state.metadata["criteria_set"]
@@ -103,7 +103,7 @@ def draft(draft_model: str | None):
 
 
 def _validity(md: str, passage_ids: list[str], citations: list[dict] | None = None) -> tuple[bool, str]:
-    from site_assess import drafting
+    from contaminated_land import drafting
 
     errs = drafting.validate_citations(md, [{"chunk_id": i} for i in passage_ids])  # type: ignore[list-item]
     if not CHUNK_ID.search(md):
@@ -138,7 +138,7 @@ def citation_validity_final():
 @scorer(metrics=[accuracy()])
 def number_fidelity():
     async def score(state: TaskState, target: Target) -> Score:
-        from site_assess import drafting
+        from contaminated_land import drafting
 
         site, md = state.metadata["site"], state.metadata["draft"]["markdown"]
         for restored in (
@@ -182,7 +182,7 @@ def facts_support(judge_id: str):
     """Fraction of uncited prose sentences the judge finds stated by the FACTS block (claim_support skips them)."""
 
     async def score(state: TaskState, target: Target) -> Score:
-        from site_assess import drafting
+        from contaminated_land import drafting
 
         # Unredacted FACTS, as the restored draft is: the redacted block the model saw has placeholders
         # (<SITE_4>, even <ORG_2> for "Mercury") that the judge cannot match to the draft. claim_support already
@@ -207,7 +207,7 @@ def facts_support(judge_id: str):
 
 
 def _judge_model_id() -> str | None:
-    m = os.environ.get("SITE_ASSESS_JUDGE_MODEL")
+    m = os.environ.get("CONTAMINATED_LAND_JUDGE_MODEL")
     return None if not m else (m if m.startswith("openrouter/") else f"openrouter/{m}")
 
 
@@ -250,7 +250,7 @@ def claim_support(judge_id: str):
 @task
 def draft_faithfulness(draft_model: str | None = None):
     require_key()
-    from site_assess.paths import SITES_YAML
+    from contaminated_land.paths import SITES_YAML
 
     sites = {r["site_id"]: r for r in yaml.safe_load(SITES_YAML.read_text())}
     scorers = [
@@ -264,7 +264,7 @@ def draft_faithfulness(draft_model: str | None = None):
     if judge:
         scorers += [claim_support(judge), facts_support(judge)]
     else:
-        print("draft_faithfulness: claim_support skipped, SITE_ASSESS_JUDGE_MODEL is not set.", file=sys.stderr)
+        print("draft_faithfulness: claim_support skipped, CONTAMINATED_LAND_JUDGE_MODEL is not set.", file=sys.stderr)
     return Task(
         dataset=[
             Sample(id=sid, input=f"{sid} / {cs}", metadata={"site_id": sid, "criteria_set": cs, "site": sites[sid]})
@@ -272,11 +272,11 @@ def draft_faithfulness(draft_model: str | None = None):
         ],
         solver=draft(draft_model),
         scorer=scorers,
-        model="mockllm/model",  # unused: drafting model sits behind site_assess.llm, judge is a get_model
+        model="mockllm/model",  # unused: drafting model sits behind contaminated_land.llm, judge is a get_model
         metadata={
             "draft_model": draft_model
-            or os.environ.get("SITE_ASSESS_MODEL")
-            or "default (site_assess.llm.DEFAULT_MODEL)",
+            or os.environ.get("CONTAMINATED_LAND_MODEL")
+            or "default (contaminated_land.llm.DEFAULT_MODEL)",
             "judge_model": judge,
         },
     )

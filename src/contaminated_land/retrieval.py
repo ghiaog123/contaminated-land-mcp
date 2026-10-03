@@ -3,8 +3,8 @@ import lancedb
 from fastembed import TextEmbedding
 from lancedb.rerankers import RRFReranker
 
-from site_assess.paths import LANCEDB_DIR
-from site_assess.types import Passage, SearchMode
+from contaminated_land.paths import LANCEDB_DIR
+from contaminated_land.types import Passage, SearchMode
 
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"  # must match ingest/build_index.py
 _COLS = ["chunk_id", "doc_id", "doc_title", "page", "section", "text"]

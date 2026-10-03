@@ -17,9 +17,9 @@ Each lane owns its files. Shared contracts live in [02-architecture.md](02-archi
 
 | Lane | Owns | Depends on | Done when |
 |---|---|---|---|
-| A. Sources and retrieval | `ingest/`, `data/sources.yaml`, `src/site_assess/retrieval.py`, `data/cache/` | Spike 3 | `search_guidance` returns cited passages; a retrieval smoke test passes |
-| B. Criteria and screening | `data/criteria/`, `data/lab/`, `src/site_assess/screening.py`, `src/site_assess/apps/`, `tests/test_screening.py` | Spike 2 for the App only | Every criteria row cites doc and page from a fetched source; screening unit tests pass |
-| C. Drafting and guardrails | `src/site_assess/drafting.py`, `redact.py`, `llm.py`, `tests/test_redact.py`, `tests/test_citations.py` | Spike 4; uses A and B through their contracts | Redaction round-trips; invalid citations are rejected in tests |
+| A. Sources and retrieval | `ingest/`, `data/sources.yaml`, `src/contaminated_land/retrieval.py`, `data/cache/` | Spike 3 | `search_guidance` returns cited passages; a retrieval smoke test passes |
+| B. Criteria and screening | `data/criteria/`, `data/lab/`, `src/contaminated_land/screening.py`, `src/contaminated_land/apps/`, `tests/test_screening.py` | Spike 2 for the App only | Every criteria row cites doc and page from a fetched source; screening unit tests pass |
+| C. Drafting and guardrails | `src/contaminated_land/drafting.py`, `redact.py`, `llm.py`, `tests/test_redact.py`, `tests/test_citations.py` | Spike 4; uses A and B through their contracts | Redaction round-trips; invalid citations are rejected in tests |
 | D. Evals | `evals/` | A, B, C contracts | Three tasks run and print scores for at least one model |
 | E. Packaging and presentation | `pyproject.toml`, `README.md`, `demo/`, `.github/workflows/`, `server.py` | All lanes | Clean-machine setup works with one uv command; GIF recorded |
 

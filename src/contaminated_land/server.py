@@ -13,12 +13,12 @@ from fastmcp.exceptions import ToolError
 from fastmcp.tools import ToolResult
 from mcp.types import ToolAnnotations
 
-from site_assess import drafting, paths, retrieval, screening
-from site_assess.llm import MissingAPIKey
-from site_assess.types import CriteriaSetInfo, DraftResult, Passage, ScreeningResult, SectionType
+from contaminated_land import drafting, paths, retrieval, screening
+from contaminated_land.llm import MissingAPIKey
+from contaminated_land.types import CriteriaSetInfo, DraftResult, Passage, ScreeningResult, SectionType
 
-UI_URI = "ui://site-assess/exceedances"
-EXCEEDANCES_HTML = paths.ROOT / "src" / "site_assess" / "apps" / "exceedances.html"
+UI_URI = "ui://contaminated-land-mcp/exceedances"
+EXCEEDANCES_HTML = paths.ROOT / "src" / "contaminated_land" / "apps" / "exceedances.html"
 PLACEHOLDER_HTML = (
     "<html><body><p>Exceedance view not built. The text result of the tool holds the same data.</p></body></html>"
 )
@@ -57,7 +57,7 @@ DRAFT_DESC = (
     + CRITERIA_HINT
 )
 
-mcp = FastMCP("site-assessment")
+mcp = FastMCP("contaminated-land")
 
 
 class SearchOutput(TypedDict):
@@ -136,7 +136,8 @@ def draft_section(site_id: str, criteria_set: str, section: SectionType = "resul
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(prog="site-assess", description="Site Assessment MCP server (stdio by default).")
+    desc = "Contaminated Land MCP server (stdio by default)."
+    ap = argparse.ArgumentParser(prog="contaminated-land-mcp", description=desc)
     ap.add_argument("--http", action="store_true", help="serve streamable HTTP instead of stdio")
     ap.add_argument("--port", type=int, default=8000, help="HTTP port (only with --http)")
     a = ap.parse_args()

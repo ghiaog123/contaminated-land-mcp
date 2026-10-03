@@ -8,7 +8,7 @@ Status: draft, 2026-10-02. This file is the contract the build lanes code agains
 Claude Desktop / Claude Code   (host; its chat model is always Claude)
         |  MCP (stdio; streamable HTTP optional)
         v
-site-assessment MCP server (Python, FastMCP)
+contaminated-land MCP server (Python, FastMCP)
   ├── search_guidance ──> retrieval: LanceDB hybrid (vector + full-text, RRF)
   ├── screen_lab_results ──> screening: pure Python over CSV + criteria table
   └── draft_section ──> redact (Presidio) ──> OpenRouter LLM ──> citation validator ──> restore placeholders
@@ -21,12 +21,12 @@ tracing: OpenInference ──> Phoenix (local)
 ## Directory layout
 
 ```
-site-assessment-mcp/
+contaminated-land-mcp/
   README.md
   pyproject.toml            # uv project; uv.lock committed
   .env.example              # variable names only, never values
   docs/                     # this folder
-  src/site_assess/
+  src/contaminated_land/
     server.py               # FastMCP app, tool registration only
     retrieval.py            # search over LanceDB
     screening.py            # CSV + criteria -> exceedances; no LLM
@@ -49,7 +49,7 @@ site-assessment-mcp/
 
 ## Tool contracts
 
-All tools return structured output (`structuredContent` with a declared output schema) plus a short text rendering for hosts that ignore structured output. The Python contract is `src/site_assess/types.py`; `chunk_id` format is `<doc_id>:p<page>:<nnnn>`, for example `nepm-asc-b1:p12:0003`.
+All tools return structured output (`structuredContent` with a declared output schema) plus a short text rendering for hosts that ignore structured output. The Python contract is `src/contaminated_land/types.py`; `chunk_id` format is `<doc_id>:p<page>:<nnnn>`, for example `nepm-asc-b1:p12:0003`.
 
 ### `search_guidance`
 
@@ -104,7 +104,7 @@ Output:
   "not_screened": [{"sample_id": string, "analyte": string,
                    "reason": "below_lor"|"no_criterion"|"unit_mismatch"|"no_depth"|"non_numeric_criterion"}],
   "notes": [string],                    # fixed caveats, e.g. duplicates screened separately
-  "_meta": {"ui": {"resourceUri": "ui://site-assess/exceedances"}}   # MCP App, optional
+  "_meta": {"ui": {"resourceUri": "ui://contaminated-land-mcp/exceedances"}}   # MCP App, optional
 }
 ```
 
@@ -147,8 +147,8 @@ Output:
 | Variable | Required | Meaning |
 |---|---|---|
 | `OPENROUTER_API_KEY` | yes, for `draft_section` and evals | Never committed. `.env` is gitignored. |
-| `SITE_ASSESS_MODEL` | no | OpenRouter model id for `draft_section`. Default `deepseek/deepseek-v4.1-flash` ([D2](08-decisions.md#d2-llm-access-openrouter-status-decided)). |
-| `SITE_ASSESS_JUDGE_MODEL` | no | Model id for LLM-graded evals. |
+| `CONTAMINATED_LAND_MODEL` | no | OpenRouter model id for `draft_section`. Default `deepseek/deepseek-v4.1-flash` ([D2](08-decisions.md#d2-llm-access-openrouter-status-decided)). |
+| `CONTAMINATED_LAND_JUDGE_MODEL` | no | Model id for LLM-graded evals. |
 | `PHOENIX_COLLECTOR_ENDPOINT` | no | Enables tracing when set. |
 
 ## Where data goes
@@ -156,7 +156,7 @@ Output:
 | Data | Leaves the machine? | To whom |
 |---|---|---|
 | Guidance PDFs, index, criteria tables | No | |
-| Lab CSV values | Only inside `draft_section`, after redaction | OpenRouter, then the provider of `SITE_ASSESS_MODEL` |
+| Lab CSV values | Only inside `draft_section`, after redaction | OpenRouter, then the provider of `CONTAMINATED_LAND_MODEL` |
 | Client names, site addresses | Not to the OpenRouter provider (replaced by placeholders). Yes to the host model, because `draft_section` restores them in its returned draft. | Anthropic, via the host |
 | What the user types in Claude, and every tool result | Yes | Anthropic, because the host chat model is Claude. Outside this server's control. |
 | Traces | No | Local Phoenix only |

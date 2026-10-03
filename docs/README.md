@@ -2,7 +2,7 @@
 
 Status: draft, 2026-10-02. Docs only. No code yet.
 
-Site Assessment Assistant is a Python MCP server for Claude. It searches public Australian contaminated-land guidance with page citations, screens synthetic lab results against assessment criteria in plain code, and drafts a cited results section behind a redaction guardrail.
+Contaminated Land MCP is a Python MCP server for Claude. It searches public Australian contaminated-land guidance with page citations, screens synthetic lab results against assessment criteria in plain code, and drafts a cited results section behind a redaction guardrail.
 
 | File | What it answers |
 |---|---|

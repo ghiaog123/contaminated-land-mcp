@@ -4483,7 +4483,7 @@ wheels = [
 ]
 
 [[package]]
-name = "site-assess"
+name = "contaminated-land-mcp"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -32,7 +32,7 @@ def _samples() -> list[Sample]:
 @solver
 def search(mode: str):
     async def solve(state: TaskState, generate: Generate) -> TaskState:
-        from site_assess import retrieval  # lazy: keeps `inspect list tasks` free of lancedb/embedding imports
+        from contaminated_land import retrieval  # lazy: keeps `inspect list tasks` free of lancedb/embedding imports
 
         hits = retrieval.search(state.input_text, top_k=20, mode=mode)
         ends = retrieval.page_ends([h["chunk_id"] for h in hits])
@@ -51,7 +51,7 @@ def _first_hit_rank(state: TaskState) -> int | None:
     """1-based rank of the first returned passage covering a gold (doc_id, page), else None.
 
     A chunk covers every page in [page, page_end]: HybridChunker can merge a table with the notes before it."""
-    from site_assess.retrieval import covers_page
+    from contaminated_land.retrieval import covers_page
 
     gold = [(g["doc_id"], g["page"]) for g in state.metadata["gold"]]
     for i, h in enumerate(json.loads(state.output.completion), start=1):

@@ -13,7 +13,7 @@ from functools import cache
 import pytest
 import yaml
 
-from site_assess.paths import CRITERIA_DIR, SOURCES_YAML, pdf_path
+from contaminated_land.paths import CRITERIA_DIR, SOURCES_YAML, pdf_path
 
 pytestmark = pytest.mark.pdf
 

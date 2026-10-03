@@ -6,8 +6,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from site_assess.paths import SOURCES_YAML
-from site_assess.retrieval import covers_page, page_ends, search
+from contaminated_land.paths import SOURCES_YAML
+from contaminated_land.retrieval import covers_page, page_ends, search
 
 PAGES = {d["id"]: d["pages"] for d in yaml.safe_load(SOURCES_YAML.read_text())}
 CHUNK_ID = re.compile(r"^(?P<doc>[a-z0-9-]+):p(?P<page>\d+):\d{4}$")

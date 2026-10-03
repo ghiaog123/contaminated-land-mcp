@@ -10,7 +10,7 @@ import urllib.request
 import yaml
 from pypdf import PdfReader
 
-from site_assess.paths import PDF_DIR, SOURCES_YAML, pdf_path
+from contaminated_land.paths import PDF_DIR, SOURCES_YAML, pdf_path
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
 

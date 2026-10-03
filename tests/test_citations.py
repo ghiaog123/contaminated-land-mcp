@@ -1,4 +1,4 @@
-from site_assess.drafting import check_numbers, validate_citations
+from contaminated_land.drafting import check_numbers, validate_citations
 
 P = [
     {

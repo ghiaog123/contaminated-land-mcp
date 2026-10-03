@@ -1,6 +1,6 @@
 import pytest
 
-from site_assess.redact import Redactor
+from contaminated_land.redact import Redactor
 
 SITES = [
     {"site_id": "DEMO-001", "client_name": "Acme Fuels Pty Ltd", "site_address": "12 Smith Road, Parramatta NSW 2150"},

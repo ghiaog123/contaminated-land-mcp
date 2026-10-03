@@ -22,7 +22,7 @@ from fastembed import TextEmbedding
 from lancedb.index import FTS
 from pypdf import PdfReader
 
-from site_assess.paths import DOCLING_DIR, LANCEDB_DIR, SOURCES_YAML, pdf_path
+from contaminated_land.paths import DOCLING_DIR, LANCEDB_DIR, SOURCES_YAML, pdf_path
 
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"  # 384-d; the tokenizer below is the model's own
 MAX_TOKENS = 450  # < 512 model limit, leaves room for the "<title> > <section> > p.N" header

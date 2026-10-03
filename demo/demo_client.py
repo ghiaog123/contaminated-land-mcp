@@ -8,7 +8,7 @@ import sys
 
 from fastmcp import Client
 
-from site_assess.server import mcp
+from contaminated_land.server import mcp
 
 
 async def main(argv: list[str]) -> None:
