@@ -1,0 +1,5 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-10,ND-1,2026-01-01,,soil,Toluene,,500,mg/kg,,0.1,SYN-EV-10-001
+EV-10,ND-2,2026-01-01,,soil,Benzene,,1,mg/kg,,0.05,SYN-EV-10-002
+EV-10,ND-3,2026-01-01,0.5,soil,Benzene,,1.0,mg/kg,,0.05,SYN-EV-10-003

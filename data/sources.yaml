@@ -1,0 +1,37 @@
+# Every source document the demo uses. sha256, retrieved and pages are written by
+# ingest/fetch_sources.py, never by hand. PDFs are downloaded to data/cache/pdf/ and
+# are not committed (redistributable: false). See docs/03-data.md.
+- id: nepm-asc-b1
+  title: Schedule B1 Guideline on Investigation Levels for Soil and Groundwater
+  publisher: National Environment Protection Council
+  url: https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/2
+  landing_url: https://www.legislation.gov.au/Details/F2013C00288
+  licence: unverified
+  licence_checked: 2026-10-02
+  redistributable: false
+  sha256: 17788fb3339c5163139dc72cf67234b2276de9115d272ae7770f36c4bd77ad99
+  retrieved: 2026-10-02
+  pages: 89
+- id: nepm-asc-b2
+  title: Schedule B2 Guideline on Site Characterisation
+  publisher: National Environment Protection Council
+  url: https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/3
+  landing_url: https://www.legislation.gov.au/Details/F2013C00288
+  licence: unverified
+  licence_checked: 2026-10-02
+  redistributable: false
+  sha256: 30254dc4b83232b4cf5538e6c8e2cddfa9b0514355856ab4d4e5c45646359e21
+  retrieved: 2026-10-02
+  pages: 150
+- id: dwer-acs-2021
+  title: 'Guideline: Assessment and management of contaminated sites'
+  publisher: Department of Water and Environmental Regulation (WA)
+  url: https://www.wa.gov.au/system/files/2023-05/guideline-assessment-and-management-of-contaminated-sites.pdf
+  landing_url: https://www.wa.gov.au/government/publications/guideline-assessment-and-management-of-contaminated-sites
+  licence: All other rights reserved; reproduction in unaltered form for personal
+    non-commercial or in-organisation use only (PDF front matter)
+  licence_checked: 2026-10-02
+  redistributable: false
+  sha256: 9670a3d360ec016691fc79d16d699814c5ed47c01d5e056ce514805a389d9eae
+  retrieved: 2026-10-02
+  pages: 178

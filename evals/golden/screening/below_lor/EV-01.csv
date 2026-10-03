@@ -1,0 +1,5 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-01,S1,2026-01-01,,soil,Arsenic,,150,mg/kg,<,150,SYN-EV-01-001
+EV-01,S1,2026-01-01,,soil,Lead,,0.5,mg/kg,<,0.5,SYN-EV-01-002
+EV-01,S1,2026-01-01,,soil,Cadmium,,25,mg/kg,,0.1,SYN-EV-01-003

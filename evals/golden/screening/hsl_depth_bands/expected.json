@@ -1,0 +1,26 @@
+{
+  "criteria_set": "hsl-a-b-vapour-intrusion",
+  "exceedances": [
+    {
+      "sample_id": "D0.99",
+      "analyte": "Toluene",
+      "ratio": 1.25
+    },
+    {
+      "sample_id": "D1.99",
+      "analyte": "Toluene",
+      "ratio": 1.05
+    },
+    {
+      "sample_id": "D3.99",
+      "analyte": "Toluene",
+      "ratio": 1.03
+    },
+    {
+      "sample_id": "D4.50",
+      "analyte": "Toluene",
+      "ratio": 1.11
+    }
+  ],
+  "not_screened": []
+}

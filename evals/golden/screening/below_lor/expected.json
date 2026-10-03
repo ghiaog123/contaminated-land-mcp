@@ -1,0 +1,22 @@
+{
+  "criteria_set": "hil-a-residential",
+  "exceedances": [
+    {
+      "sample_id": "S1",
+      "analyte": "Cadmium",
+      "ratio": 1.25
+    }
+  ],
+  "not_screened": [
+    {
+      "sample_id": "S1",
+      "analyte": "Arsenic",
+      "reason": "below_lor"
+    },
+    {
+      "sample_id": "S1",
+      "analyte": "Lead",
+      "reason": "below_lor"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "criteria_set": "hil-a-residential",
+  "exceedances": [
+    {
+      "sample_id": "BH01-0.5",
+      "analyte": "Lead",
+      "ratio": 1.17
+    },
+    {
+      "sample_id": "BH01-0.5-DUP",
+      "analyte": "Lead",
+      "ratio": 1.1
+    },
+    {
+      "sample_id": "BH01-0.5-DUP",
+      "analyte": "Arsenic",
+      "ratio": 1.2
+    }
+  ],
+  "not_screened": []
+}

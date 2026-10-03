@@ -1,0 +1,7 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-12,A1,2026-01-01,,soil,Cr(VI),,150,mg/kg,,0.1,SYN-EV-12-001
+EV-12,A2,2026-01-01,,soil,Inorganic Mercury,,60,mg/kg,,0.1,SYN-EV-12-002
+EV-12,A3,2026-01-01,,soil,BaP TEQ,,6,mg/kg,,0.1,SYN-EV-12-003
+EV-12,A4,2026-01-01,,soil,Hexavalent Chromium,,50,mg/kg,,0.1,SYN-EV-12-004
+EV-12,A5,2026-01-01,,soil,Hex Chrome,,500,mg/kg,,0.1,SYN-EV-12-005

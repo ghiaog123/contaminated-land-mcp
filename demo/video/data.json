@@ -1,0 +1,262 @@
+{
+  "_about": "Every value the video shows. Each block names its source; the HTML holds no numbers of its own.",
+  "title": "site-assessment-mcp",
+  "tagline": "the host model picks the tools; the server checks the facts",
+  "legend": [
+    {
+      "key": "host",
+      "label": "host model: any MCP client"
+    },
+    {
+      "key": "code",
+      "label": "code: no model"
+    },
+    {
+      "key": "llm",
+      "label": "model inside a tool"
+    }
+  ],
+  "host": {
+    "_source": "README.md, src/site_assess/server.py: stdio FastMCP server, any MCP client drives it",
+    "name": "host model",
+    "lines": [
+      "any MCP client",
+      "reads the request, picks a tool"
+    ],
+    "transport": "MCP over stdio"
+  },
+  "tools": [
+    {
+      "_source": "src/site_assess/server.py",
+      "name": "list_criteria_sets",
+      "kind": "code",
+      "does": "3 criteria sets"
+    },
+    {
+      "_source": "src/site_assess/server.py",
+      "name": "screen_lab_results",
+      "kind": "code",
+      "does": "compares every result in code"
+    },
+    {
+      "_source": "src/site_assess/server.py",
+      "name": "search_guidance",
+      "kind": "code",
+      "does": "hybrid search, local embeddings"
+    },
+    {
+      "_source": "src/site_assess/server.py:130, drafting.py:199",
+      "name": "draft_section",
+      "kind": "llm",
+      "does": "OpenRouter model writes prose"
+    }
+  ],
+  "guard": {
+    "_source": "src/site_assess/drafting.py draft_section pipeline",
+    "title": "inside draft_section",
+    "steps": [
+      "facts from screening",
+      "retrieve passages",
+      "redact client names",
+      "model drafts (OpenRouter)",
+      "check citations + numbers",
+      "drop failing sentences",
+      "restore names"
+    ],
+    "note": "model sees placeholders, not names"
+  },
+  "turns": [
+    {
+      "_source": "evals/golden/agent_cases.yaml a09; inspect log a09 epoch 1 on final code (grading/agent_v4); calls = every tool call in that turn of the packet",
+      "user": "Screen the results for site DEMO-03 against the residential criteria.",
+      "call": "screen_lab_results(site_id=\"DEMO-03\", criteria_set=\"hil-a-residential\")",
+      "tool": "screen_lab_results",
+      "summary": "5 samples, 9 analytes, 7 exceedances, 1 not screened",
+      "exceedances": [
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Lead",
+          "result": "1020.0",
+          "criterion": "300.0",
+          "ratio": 3.4
+        },
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Carcinogenic PAHs",
+          "result": "6.6",
+          "criterion": "3.0",
+          "ratio": 2.2
+        },
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Arsenic",
+          "result": "160.0",
+          "criterion": "100.0",
+          "ratio": 1.6
+        },
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Cadmium",
+          "result": "26.0",
+          "criterion": "20.0",
+          "ratio": 1.3
+        },
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Mercury (inorganic)",
+          "result": "52.0",
+          "criterion": "40.0",
+          "ratio": 1.3
+        },
+        {
+          "sample": "FILL-02",
+          "depth": "0.4 m",
+          "analyte": "Zinc",
+          "result": "8140.0",
+          "criterion": "7400.0",
+          "ratio": 1.1
+        },
+        {
+          "sample": "FILL-03",
+          "depth": "0.6 m",
+          "analyte": "Lead",
+          "result": "305.0",
+          "criterion": "300.0",
+          "ratio": 1.02
+        }
+      ],
+      "unit": "mg/kg",
+      "source_ref": "nepm-asc-b1 p.56, Table 1A(1)",
+      "not_screened": "FILL-04 Lead (unit_mismatch)",
+      "calls": [
+        "list_criteria_sets",
+        "screen_lab_results",
+        "search_guidance",
+        "search_guidance"
+      ]
+    },
+    {
+      "_source": "same log, turn 2 search_guidance result, passage nepm-asc-b1:p13:0024 (verbatim); calls = every tool call in that turn of the packet",
+      "user": "What does the guidance say about the exceedances?",
+      "call": "search_guidance(query=\"exceeding a HIL means further investigation...\", doc_ids=[\"nepm-asc-b1\"])",
+      "tool": "search_guidance",
+      "summary": "full passages, each with [chunk_id] and page",
+      "passages": [
+        {
+          "chunk_id": "nepm-asc-b1:p13:0024",
+          "page": "p.13",
+          "text": "Levels slightly in excess of the HILs do not imply unacceptability or that a significant health risk is likely to be present."
+        },
+        {
+          "chunk_id": "nepm-asc-b1:p13:0024",
+          "page": "p.13",
+          "text": "HILs are not intended to be clean-up levels."
+        }
+      ],
+      "calls": [
+        "search_guidance",
+        "search_guidance",
+        "search_guidance",
+        "search_guidance"
+      ]
+    },
+    {
+      "_source": "same log, turn 3 draft_section result; citations counted from the returned markdown; redaction from site_assess.redact on the DEMO-03 facts (data/lab/sites.yaml); calls = every tool call in that turn of the packet",
+      "user": "Draft the results section.",
+      "call": "draft_section(site_id=\"DEMO-03\", criteria_set=\"hil-a-residential\")",
+      "tool": "draft_section",
+      "summary": "draft returned, shown to the user unchanged",
+      "draft_lines": [
+        "...exceedance should trigger consideration of an appropriate site-specific, risk-based approach or risk-management options [nepm-asc-b1:p12:0022]."
+      ],
+      "citations": 10,
+      "distinct_sources": 5,
+      "warnings": 0,
+      "footer": "Draft for review. A qualified person must check every statement.",
+      "redaction": [
+        {
+          "original": "Sample Property Developments Pty Ltd",
+          "placeholder": "<CLIENT_1>"
+        },
+        {
+          "original": "7 Nowhere Lane, Mockford QLD 4999",
+          "placeholder": "<ADDRESS_1>"
+        }
+      ],
+      "draft_heading": "FILL-03, 0.6 m",
+      "draft_table": {
+        "header": [
+          "Analyte",
+          "Result (mg/kg)",
+          "Criterion (mg/kg)",
+          "Reported ratio"
+        ],
+        "rows": [
+          [
+            "Lead",
+            "305.0",
+            "300.0",
+            "1.02"
+          ]
+        ]
+      },
+      "calls": [
+        "draft_section"
+      ],
+      "facts": [
+        "client_name: Sample Property Developments Pty Ltd",
+        "site_address: 7 Nowhere Lane, Mockford QLD 4999",
+        "land_use: residential-a",
+        "soil_type: clay"
+      ]
+    }
+  ],
+  "scoreboard": {
+    "_source": "evals/manual_review_2026-10-03.md (Summary, Regression check); README.md eval table",
+    "title": "evals, 2026-10-03",
+    "rows": [
+      {
+        "label": "screening exact",
+        "value": "13/13",
+        "frac": 1.0
+      },
+      {
+        "label": "draft citation validity",
+        "value": "1.0",
+        "frac": 1.0
+      },
+      {
+        "label": "draft number fidelity",
+        "value": "1.0",
+        "frac": 1.0
+      },
+      {
+        "label": "agent tool calls",
+        "value": "36/36",
+        "frac": 1.0
+      },
+      {
+        "label": "retrieval recall@5",
+        "value": "0.85",
+        "frac": 0.85
+      },
+      {
+        "label": "PII leaks",
+        "value": "0",
+        "frac": 0.0
+      }
+    ],
+    "tests": "93 tests pass"
+  },
+  "status": {
+    "_source": "src/site_assess/llm.py (SITE_ASSESS_MODEL), fastembed local embeddings",
+    "left": "site-assess (stdio)",
+    "mid": "4 tools; 1 calls a model",
+    "right": "embeddings: local"
+  }
+}

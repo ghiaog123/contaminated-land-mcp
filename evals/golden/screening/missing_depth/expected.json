@@ -1,0 +1,22 @@
+{
+  "criteria_set": "hsl-a-b-vapour-intrusion",
+  "exceedances": [
+    {
+      "sample_id": "ND-3",
+      "analyte": "Benzene",
+      "ratio": 2.0
+    }
+  ],
+  "not_screened": [
+    {
+      "sample_id": "ND-1",
+      "analyte": "Toluene",
+      "reason": "no_depth"
+    },
+    {
+      "sample_id": "ND-2",
+      "analyte": "Benzene",
+      "reason": "no_depth"
+    }
+  ]
+}

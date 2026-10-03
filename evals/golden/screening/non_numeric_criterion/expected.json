@@ -1,0 +1,32 @@
+{
+  "criteria_set": "hsl-a-b-vapour-intrusion",
+  "exceedances": [
+    {
+      "sample_id": "NL-4",
+      "analyte": "Ethylbenzene",
+      "ratio": 1.09
+    },
+    {
+      "sample_id": "NL-5",
+      "analyte": "F2",
+      "ratio": 1.14
+    }
+  ],
+  "not_screened": [
+    {
+      "sample_id": "NL-1",
+      "analyte": "Ethylbenzene",
+      "reason": "non_numeric_criterion"
+    },
+    {
+      "sample_id": "NL-2",
+      "analyte": "Naphthalene",
+      "reason": "non_numeric_criterion"
+    },
+    {
+      "sample_id": "NL-3",
+      "analyte": "F2",
+      "reason": "non_numeric_criterion"
+    }
+  ]
+}

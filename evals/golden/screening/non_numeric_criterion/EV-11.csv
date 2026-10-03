@@ -1,0 +1,7 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-11,NL-1,2026-01-01,1.5,soil,Ethylbenzene,,500,mg/kg,,0.1,SYN-EV-11-001
+EV-11,NL-2,2026-01-01,2.5,soil,Naphthalene,,100,mg/kg,,0.1,SYN-EV-11-002
+EV-11,NL-3,2026-01-01,5.0,soil,F2,,1000,mg/kg,,0.1,SYN-EV-11-003
+EV-11,NL-4,2026-01-01,0.5,soil,Ethylbenzene,,60,mg/kg,,0.1,SYN-EV-11-004
+EV-11,NL-5,2026-01-01,3.0,soil,F2,,500,mg/kg,,0.1,SYN-EV-11-005

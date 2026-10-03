@@ -1,0 +1,16 @@
+{
+  "criteria_set": "hil-a-residential",
+  "exceedances": [
+    {
+      "sample_id": "S1",
+      "analyte": "Lead",
+      "ratio": 1.33
+    },
+    {
+      "sample_id": "S1",
+      "analyte": "Zinc",
+      "ratio": 1.08
+    }
+  ],
+  "not_screened": []
+}

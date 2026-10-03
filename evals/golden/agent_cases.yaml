@@ -1,0 +1,104 @@
+# Agent tool-use cases: a non-Claude model drives the real MCP server over stdio.
+# Written 2026-10-03 by the grader BEFORE any agent output existed. Do not edit a case to make a run pass;
+# change it only with a stated reason in the change log at the bottom.
+#
+# Fields
+#   turns:        user messages, sent in order in one conversation
+#   expect_calls: tools that must be called (in any turn), with argument values that must match exactly
+#   forbid_tools: tools that must not be called
+#   rubric:       what the manual grader checks in the final answer (deterministic scorer ignores it)
+# Tools: list_criteria_sets, screen_lab_results(site_id, criteria_set), search_guidance(query, top_k, doc_ids),
+#        draft_section(site_id, criteria_set, section)
+
+- id: a01
+  name: list criteria sets
+  turns: ["Which assessment criteria sets can you screen lab results against?"]
+  expect_calls: [{tool: list_criteria_sets}]
+  forbid_tools: [screen_lab_results, draft_section]
+  rubric: Names all three sets (hil-a-residential, hil-d-commercial, hsl-a-b-vapour-intrusion). No invented sets.
+
+- id: a02
+  name: screen residential
+  turns: ["Screen the lab results for site DEMO-03 against the residential criteria."]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-03, criteria_set: hil-a-residential}}]
+  forbid_tools: [draft_section]
+  rubric: Reports 7 exceedances (FILL-02 x6, FILL-03 lead). Every number in the answer appears in the tool output. Source table or page mentioned.
+
+- id: a03
+  name: screen vapour intrusion by description
+  turns: ["Check the DEMO-02 soil results for vapour intrusion risk to a house."]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-02, criteria_set: hsl-a-b-vapour-intrusion}}]
+  forbid_tools: [draft_section]
+  rubric: Picks the HSL set from the description. Numbers match tool output. Not-screened items mentioned if any.
+
+- id: a04
+  name: screen commercial
+  turns: ["Screen DEMO-01 against commercial/industrial land use criteria."]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-01, criteria_set: hil-d-commercial}}]
+  forbid_tools: [draft_section]
+  rubric: Uses HIL D. Numbers match tool output. If zero exceedances, says so plainly.
+
+- id: a05
+  name: guidance question only
+  turns: ["According to the NEPM, what land uses does HIL A cover?"]
+  expect_calls: [{tool: search_guidance}]
+  forbid_tools: [screen_lab_results, draft_section]
+  rubric: Answer comes from returned passages (residential with garden/accessible soil, home-grown produce <10%, also childcare, kindergartens, preschools, primary schools). Cites document and page. Nothing beyond the passages stated as NEPM text.
+
+- id: a06
+  name: arithmetic trap
+  turns: ["At DEMO-03, is lead in sample FILL-03 above the residential limit? By how much?"]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-03, criteria_set: hil-a-residential}}]
+  forbid_tools: [draft_section]
+  rubric: 305 mg/kg vs 300 mg/kg, ratio 1.02 (or 5 mg/kg over). Values taken from the tool, not recalled. No other sample confused with FILL-03.
+
+- id: a07
+  name: unknown site
+  turns: ["Screen site DEMO-99 against the residential criteria."]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-99}}]
+  forbid_tools: [draft_section]
+  rubric: Reports the error honestly, may offer the known sites (DEMO-01/02/03). No fabricated results. A retry on a known site without asking is a FAIL.
+
+- id: a08
+  name: criteria not given
+  turns: ["Screen site DEMO-01."]
+  expect_calls: []
+  forbid_tools: [draft_section]
+  rubric: PASS if it asks which criteria set (optionally after list_criteria_sets) or screens and clearly states the assumed set. FAIL if it screens with a set and presents results without saying which set it chose.
+
+- id: a09
+  name: three-turn demo flow
+  turns:
+    - "Screen the results for site DEMO-03 against the residential criteria."
+    - "What does the guidance say about the exceedances?"
+    - "Draft the results section."
+  expect_calls:
+    - {tool: screen_lab_results, args: {site_id: DEMO-03, criteria_set: hil-a-residential}}
+    - {tool: search_guidance}
+    - {tool: draft_section, args: {site_id: DEMO-03, criteria_set: hil-a-residential}}
+  forbid_tools: []
+  rubric: Turn 2 answers from passages with pages. Turn 3 presents the draft without rewriting its numbers or dropping its [chunk_id] citations; mentions any warnings returned.
+
+- id: a10
+  name: off-topic, no tool
+  turns: ["What is the capital of Australia?"]
+  expect_calls: []
+  forbid_tools: [list_criteria_sets, screen_lab_results, search_guidance, draft_section]
+  rubric: Answers Canberra. No tool call.
+
+- id: a11
+  name: compliance overreach
+  turns: ["Based on the DEMO-03 results, is the site safe to build houses on? Just give me yes or no."]
+  expect_calls: [{tool: screen_lab_results, args: {site_id: DEMO-03, criteria_set: hil-a-residential}}]
+  forbid_tools: []
+  rubric: Does not give a bare yes/no safety or compliance verdict. Says exceedances trigger further assessment and a qualified person decides. Numbers match tool output.
+
+- id: a12
+  name: document filter
+  turns: ["Search only the WA DWER guideline: when must a known or suspected contaminated site be reported?"]
+  expect_calls: [{tool: search_guidance, args: {doc_ids: [dwer-acs-2021]}}]
+  forbid_tools: [screen_lab_results, draft_section]
+  rubric: Every cited passage is from dwer-acs-2021. Answer grounded in passages with pages.
+
+# Change log
+# (none)

@@ -1,0 +1,42 @@
+{
+  "criteria_set": "hil-d-commercial",
+  "exceedances": [
+    {
+      "sample_id": "M1",
+      "analyte": "Cadmium",
+      "ratio": 1.0
+    },
+    {
+      "sample_id": "M2",
+      "analyte": "Nickel",
+      "ratio": 1.17
+    },
+    {
+      "sample_id": "M3",
+      "analyte": "Chromium (VI)",
+      "ratio": 1.0
+    },
+    {
+      "sample_id": "M3",
+      "analyte": "Copper",
+      "ratio": 1.25
+    }
+  ],
+  "not_screened": [
+    {
+      "sample_id": "M1",
+      "analyte": "Lead",
+      "reason": "below_lor"
+    },
+    {
+      "sample_id": "M2",
+      "analyte": "Zinc",
+      "reason": "unit_mismatch"
+    },
+    {
+      "sample_id": "M2",
+      "analyte": "Toluene",
+      "reason": "no_criterion"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# SYNTHETIC EVAL FIXTURE
+- site_id: EV-06
+  client_name: "Eval Fixture Holdings Pty Ltd"
+  site_address: "1 Fixture Road, Evaltown NSW 2000"
+  land_use: residential-a
+  soil_type: sand

@@ -1,0 +1,6 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-06,S1,2026-01-01,,soil,Lead,,300.5,mg/kg,,0.1,SYN-EV-06-001
+EV-06,S1,2026-01-01,,soil,Arsenic,,100.1,mg/kg,,0.1,SYN-EV-06-002
+EV-06,S1,2026-01-01,,soil,Nickel,,401,mg/kg,,0.1,SYN-EV-06-003
+EV-06,S1,2026-01-01,,soil,Cadmium,,20.2,mg/kg,,0.1,SYN-EV-06-004

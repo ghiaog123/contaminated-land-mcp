@@ -1,0 +1,27 @@
+{
+  "criteria_set": "hil-a-residential",
+  "exceedances": [
+    {
+      "sample_id": "A1",
+      "analyte": "Chromium (VI)",
+      "ratio": 1.5
+    },
+    {
+      "sample_id": "A2",
+      "analyte": "Mercury (inorganic)",
+      "ratio": 1.5
+    },
+    {
+      "sample_id": "A3",
+      "analyte": "Carcinogenic PAHs (as BaP TEQ)",
+      "ratio": 2.0
+    }
+  ],
+  "not_screened": [
+    {
+      "sample_id": "A5",
+      "analyte": "Hex Chrome",
+      "reason": "no_criterion"
+    }
+  ]
+}

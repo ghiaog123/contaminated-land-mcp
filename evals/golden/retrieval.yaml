@@ -1,0 +1,157 @@
+# Golden set for the retrieval_citation task (docs/04-evaluation.md, task 1).
+#
+# authored_by: agent-drafted, pending owner review
+#
+# docs/04-evaluation.md says golden sets are written by a human. This one was drafted by a coding
+# agent reading the source PDFs (pdftotext -layout, one page at a time) BEFORE any retrieval
+# output existed. It is NOT human-authored. Until the owner reviews every item (question wording
+# and gold page), published scores on it carry that caveat.
+#
+# Conventions
+# - gold = list of acceptable {doc_id, page}. page is the 1-based PDF page index, the same
+#   convention as Passage.page. It is NOT the page number printed on the page.
+# - A hit is any returned passage whose (doc_id, page) is in gold.
+# - Gold is a location, never a criterion value. No criterion values appear in this file.
+# - kind: table = "which table / where is the list", narrative = guidance wording.
+# - Do not edit an item to make a retrieval variant pass; change it with a stated reason.
+authored_by: agent-drafted, pending owner review
+items:
+  - id: r01
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Which table sets the health-based investigation levels for metals and other soil contaminants by land use category?
+    gold: [{doc_id: nepm-asc-b1, page: 56}, {doc_id: nepm-asc-b1, page: 57}]
+    derived_from: "nepm-asc-b1 PDF p56: Table 1A(1) 'Health investigation levels for soil contaminants' starts with the metals rows; continues on p57 (organics, pesticides); notes on p58."
+
+  - id: r02
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Where are the soil health screening levels for petroleum hydrocarbon vapour intrusion listed, broken down by soil texture and depth to source?
+    gold: [{doc_id: nepm-asc-b1, page: 60}, {doc_id: nepm-asc-b1, page: 61}]
+    derived_from: "nepm-asc-b1 PDF p60-61: Table 1A(3) 'Soil HSLs for vapour intrusion (mg/kg)' with HSL A & B, C and D columns; footnotes on p62."
+
+  - id: r03
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Which table gives screening levels for petroleum vapour intrusion based on groundwater concentrations?
+    gold: [{doc_id: nepm-asc-b1, page: 63}, {doc_id: nepm-asc-b1, page: 64}]
+    derived_from: "nepm-asc-b1 PDF p63-64: Table 1A(4) 'Groundwater HSLs for vapour intrusion (mg/L)'; notes p65."
+
+  - id: r04
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Which table lists the interim soil vapour investigation levels for chlorinated volatile organic compounds such as trichloroethene and vinyl chloride?
+    gold: [{doc_id: nepm-asc-b1, page: 59}]
+    derived_from: "nepm-asc-b1 PDF p59: Table 1A(2) 'Interim soil vapour health investigation levels for volatile organic chlorinated compounds'."
+
+  - id: r05
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Where do I find the ecological screening levels for the petroleum hydrocarbon fractions, BTEX and benzo(a)pyrene in soil?
+    gold: [{doc_id: nepm-asc-b1, page: 72}]
+    derived_from: "nepm-asc-b1 PDF p72: Table 1B(6) 'ESLs for TPH fractions F1 - F4, BTEX and benzo(a)pyrene in soil'."
+
+  - id: r06
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Which table gives the management limits for petroleum hydrocarbon fractions in soil, split by soil texture and land use?
+    gold: [{doc_id: nepm-asc-b1, page: 73}]
+    derived_from: "nepm-asc-b1 PDF p73: Table 1B(7) 'Management Limits for TPH fractions F1-F4 in soil'."
+
+  - id: r07
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: Which table sets the minimum number of samples recommended for an initial assessment of a soil stockpile of a given volume?
+    gold: [{doc_id: nepm-asc-b2, page: 46}]
+    derived_from: "nepm-asc-b2 PDF p46: section 7.5.2 'Number of samples' contains Table 4 'Minimum number of samples recommended for initial assessment of stockpiles'."
+
+  - id: r08
+    authored_by: agent-drafted, pending owner review
+    kind: table
+    question: In the Western Australian contaminated sites guideline, which table summarises the human health assessment levels to use for soil, by exposure pathway?
+    gold: [{doc_id: dwer-acs-2021, page: 59}]
+    derived_from: "dwer-acs-2021 PDF p59: 'Table 2: Human health assessment levels for soil' (exposure pathway, contaminants, assessment level, reference, application in WA); the ecological Table 1 sits just above it on the same page."
+
+  - id: r09
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: Is it necessary to delineate contamination at the preliminary site investigation stage, and how much sampling may a preliminary investigation include?
+    gold: [{doc_id: nepm-asc-b2, page: 15}]
+    derived_from: "nepm-asc-b2 PDF p15: paragraph after the PSI heading says delineation is not necessary at PSI and limited sampling may be included; read the page."
+
+  - id: r10
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: Under what circumstances is a detailed site investigation required after the preliminary investigation?
+    gold: [{doc_id: nepm-asc-b2, page: 15}]
+    derived_from: "nepm-asc-b2 PDF p15: section 2.2 'Detailed site investigation' opens with the trigger conditions (contamination present or likely, insufficient information)."
+
+  - id: r11
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: What are the steps of the data quality objectives process used to plan site sampling?
+    gold: [{doc_id: nepm-asc-b2, page: 125}]
+    derived_from: "nepm-asc-b2 PDF p125: Appendix B section 18.1 lists the seven steps by name (Step 1 to Step 7). p29 describes the process but does not list the steps."
+
+  - id: r12
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: Which quality control samples should be collected in the field to check sampling precision, such as blind replicates and rinsate blanks?
+    gold: [{doc_id: nepm-asc-b2, page: 31}]
+    derived_from: "nepm-asc-b2 PDF p31: section 5.4.3 'Field quality control procedures' discusses duplicates, field blanks, rinsate blanks, blind replicates and split samples."
+
+  - id: r13
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: What depth interval should surface soil samples normally cover when investigating a site?
+    gold: [{doc_id: nepm-asc-b2, page: 39}]
+    derived_from: "nepm-asc-b2 PDF p39: section 6.4 'Sampling density and depth of sampling', paragraph beginning 'At the surface, samples at ...'."
+
+  - id: r14
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: How long should a groundwater monitoring well screen be, and why should it not span different geological units?
+    gold: [{doc_id: nepm-asc-b2, page: 52}]
+    derived_from: "nepm-asc-b2 PDF p52: section 8.2.3.1 'Screen depth and length'."
+
+  - id: r15
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: Can investigation and screening levels be used as clean-up or remediation criteria?
+    gold: [{doc_id: nepm-asc-b1, page: 12}]
+    derived_from: "nepm-asc-b1 PDF p12: section 2.1.2 'Inappropriate use of investigation levels and screening levels'."
+
+  - id: r16
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: What sub-slab to indoor air attenuation factor was assumed when deriving the petroleum health screening levels, and how was it justified?
+    gold: [{doc_id: nepm-asc-b1, page: 15}, {doc_id: nepm-asc-b1, page: 16}]
+    derived_from: "nepm-asc-b1 PDF p15-16: section 2.4.3 'Sub-slab to indoor air attenuation factor' begins at the foot of p15 and its justification (US EPA attenuation database comparison) is on p16."
+
+  - id: r17
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: Does bonded asbestos-containing material in sound condition, on its own, make a site a human health risk?
+    gold: [{doc_id: nepm-asc-b1, page: 37}]
+    derived_from: "nepm-asc-b1 PDF p37: section 4.6 'Asbestos soil contamination and health risk', bonded ACM discussion."
+
+  - id: r18
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: What should a summary table of laboratory results in a site assessment report show, and which results should be highlighted?
+    gold: [{doc_id: nepm-asc-b2, page: 98}]
+    derived_from: "nepm-asc-b2 PDF p98: section 14.6 'Presentation of tabulated laboratory analytical results'."
+
+  - id: r19
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: What events or conditions trigger a site assessment under Western Australian contaminated sites rules?
+    gold: [{doc_id: dwer-acs-2021, page: 20}]
+    derived_from: "dwer-acs-2021 PDF p20: section 6.1 'Triggers for site assessment' (regulatory triggers, planning and development conditions)."
+
+  - id: r20
+    authored_by: agent-drafted, pending owner review
+    kind: narrative
+    question: When must a site assessment report submitted to the regulator be accompanied by a mandatory auditor's report?
+    gold: [{doc_id: dwer-acs-2021, page: 11}, {doc_id: dwer-acs-2021, page: 12}]
+    derived_from: "dwer-acs-2021 PDF p11-12: section 4.2 introduces the MAR on p11; p12 quotes the Contaminated Sites Regulations r.31 conditions."

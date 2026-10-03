@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exceedances</title>
+<style>
+  :root { --bg:#fff; --fg:#1b1f24; --muted:#59636e; --line:#d8dee4; --head:#f3f5f7; --hot:#fdecea; --hot-fg:#a12622; --bar:#d9534f; --ok:#2e7d32; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161b22; --fg:#e6edf3; --muted:#9aa4af; --line:#30363d; --head:#1f262e; --hot:#3a1d1d; --hot-fg:#ff9b94; --bar:#e5675f; --ok:#6fcf76; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:16px; background:var(--bg); color:var(--fg); font:14px/1.45 system-ui, sans-serif; }
+  h1 { font-size:16px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 12px; }
+  .summary { display:flex; flex-wrap:wrap; gap:8px 20px; margin:0 0 12px; }
+  .summary b { font-size:18px; }
+  .summary.clear b.n { color:var(--ok); }
+  table { border-collapse:collapse; width:100%; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  th { background:var(--head); font-weight:600; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tr.hot td { background:var(--hot); }
+  tr.hot td.ratio-cell { color:var(--hot-fg); font-weight:600; }
+  .bar { position:relative; height:8px; min-width:90px; background:var(--line); border-radius:4px; }
+  .bar i { position:absolute; left:0; top:0; bottom:0; background:var(--bar); border-radius:4px; }
+  .bar u { position:absolute; top:-3px; bottom:-3px; width:1px; background:var(--fg); }
+  .src { color:var(--muted); font-size:12px; }
+  details { margin-top:14px; }
+  summary { cursor:pointer; color:var(--muted); }
+  ul { margin:6px 0 0; padding-left:20px; color:var(--muted); }
+  .empty { padding:14px; border:1px dashed var(--line); border-radius:6px; color:var(--muted); }
+  .table-wrap { overflow-x:auto; }
+</style>
+</head>
+<body>
+<div id="app"><p class="sub">Waiting for screening result...</p></div>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app");
+
+  function el(tag, props, children) {
+    var n = document.createElement(tag);
+    Object.keys(props || {}).forEach(function (k) {
+      if (k === "class") n.className = props[k]; else n[k] = props[k];
+    });
+    (children || []).forEach(function (c) { n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  // All values come from tool output: always set via textContent / text nodes, never innerHTML.
+  function fmt(x) { return typeof x === "number" ? String(x) : (x == null ? "" : String(x)); }
+
+  function render(r) {
+    app.textContent = "";
+    if (!r || !Array.isArray(r.exceedances)) {
+      app.appendChild(el("p", { class: "empty" }, ["No screening result in this tool response."]));
+      return;
+    }
+    var ex = r.exceedances, ns = r.not_screened || [];
+    var maxRatio = Math.max.apply(null, [2].concat(ex.map(function (e) { return e.ratio; })));
+    var scale = Math.min(maxRatio, 10);
+
+    app.appendChild(el("h1", {}, ["Screening: " + r.site_id + " against " + r.criteria_set]));
+    app.appendChild(el("p", { class: "sub" }, [r.samples_screened + " samples and " + r.analytes_screened +
+      " analytes compared against a numeric criterion."]));
+    app.appendChild(el("div", { class: "summary" + (ex.length ? "" : " clear") }, [
+      el("span", {}, [el("b", { class: "n" }, [String(ex.length)]), " exceedances"]),
+      el("span", {}, [el("b", {}, [String(ns.length)]), " not screened"])
+    ]));
+
+    if (!ex.length) {
+      app.appendChild(el("p", { class: "empty" }, ["No exceedances. Results not compared are listed below."]));
+    } else {
+      var head = el("tr", {}, [
+        el("th", {}, ["Sample"]), el("th", { class: "num" }, ["Depth (m)"]), el("th", {}, ["Analyte"]),
+        el("th", { class: "num" }, ["Result"]), el("th", { class: "num" }, ["Criterion"]),
+        el("th", { class: "num" }, ["Ratio"]), el("th", {}, [""]), el("th", {}, ["Source"])
+      ]);
+      var body = ex.map(function (e) {
+        var pct = Math.max(2, Math.min(e.ratio, scale) / scale * 100);
+        var bar = el("div", { class: "bar", title: "ratio " + e.ratio + "x criterion" }, [
+          el("i", { style: "width:" + pct + "%" }), el("u", { style: "left:" + (1 / scale * 100) + "%" })
+        ]);
+        return el("tr", { class: "hot" }, [
+          el("td", {}, [e.sample_id]),
+          el("td", { class: "num" }, [e.depth_m == null ? "n/a" : fmt(e.depth_m)]),
+          el("td", {}, [e.analyte]),
+          el("td", { class: "num" }, [fmt(e.result) + " " + e.unit]),
+          el("td", { class: "num" }, [fmt(e.criterion) + " " + e.criterion_unit]),
+          el("td", { class: "num ratio-cell" }, [fmt(e.ratio) + "x"]),
+          el("td", {}, [bar]),
+          el("td", { class: "src" }, [e.source ? e.source.doc_id + " p." + e.source.page + ", " + e.source.table : ""])
+        ]);
+      });
+      app.appendChild(el("div", { class: "table-wrap" }, [
+        el("table", {}, [el("thead", {}, [head]), el("tbody", {}, body)])
+      ]));
+      app.appendChild(el("p", { class: "src" }, ["Bar scale: tick marks the criterion (ratio 1)."]));
+    }
+
+    if (ns.length) {
+      var rows = ns.map(function (n) {
+        return el("tr", {}, [el("td", {}, [n.sample_id]), el("td", {}, [n.analyte]), el("td", {}, [n.reason])]);
+      });
+      app.appendChild(el("details", {}, [
+        el("summary", {}, ["Not screened (" + ns.length + ")"]),
+        el("table", {}, [
+          el("thead", {}, [el("tr", {}, [el("th", {}, ["Sample"]), el("th", {}, ["Analyte"]), el("th", {}, ["Reason"])])]),
+          el("tbody", {}, rows)
+        ])
+      ]));
+    }
+    if ((r.notes || []).length) {
+      app.appendChild(el("details", {}, [
+        el("summary", {}, ["Notes"]),
+        el("ul", {}, r.notes.map(function (t) { return el("li", {}, [t]); }))
+      ]));
+    }
+    reportSize();
+  }
+
+  // MCP Apps (ui/ extension) transport: JSON-RPC 2.0 over window.postMessage with the host (parent window).
+  function post(msg) { window.parent.postMessage(Object.assign({ jsonrpc: "2.0" }, msg), "*"); }
+  var nextId = 1;
+  function reportSize() {
+    post({ method: "ui/notifications/size-changed",
+           params: { width: Math.ceil(document.documentElement.scrollWidth),
+                     height: Math.ceil(document.documentElement.scrollHeight) } });
+  }
+
+  function resultFrom(params) {
+    // params is a CallToolResult: structuredContent first, else JSON in the first text block.
+    if (params && params.structuredContent) return params.structuredContent;
+    var blocks = (params && params.content) || [];
+    for (var i = 0; i < blocks.length; i++) {
+      if (blocks[i].type === "text") { try { return JSON.parse(blocks[i].text); } catch (e) { /* not JSON */ } }
+    }
+    return null;
+  }
+
+  window.addEventListener("message", function (ev) {
+    if (ev.source !== window.parent) return;
+    var m = ev.data;
+    if (!m || m.jsonrpc !== "2.0") return;
+    if (m.method === "ui/notifications/tool-result") {
+      render(resultFrom(m.params));
+    } else if (m.method === "ui/resource-teardown" && m.id != null) {
+      post({ id: m.id, result: {} });
+    }
+  });
+
+  if (window.__SAMPLE__) {                 // local preview: a ScreeningResult placed on window before this script runs
+    render(window.__SAMPLE__);
+  } else if (window.parent !== window) {   // inside a host iframe: handshake, then wait for tool-result
+    var initId = nextId++;
+    window.addEventListener("message", function onInit(ev) {
+      if (ev.source === window.parent && ev.data && ev.data.id === initId) {
+        window.removeEventListener("message", onInit);
+        post({ method: "ui/notifications/initialized", params: {} });
+      }
+    });
+    post({ id: initId, method: "ui/initialize",
+           params: { protocolVersion: "2026-01-26", appInfo: { name: "site-assess-exceedances", version: "0.1.0" },
+                     appCapabilities: {} } });
+  }
+  if (window.ResizeObserver) new ResizeObserver(reportSize).observe(document.body);
+})();
+</script>
+</body>
+</html>

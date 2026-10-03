@@ -1,0 +1,11 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-13,M1,2026-01-01,,soil,Arsenic,,3000,mg/kg,,0.1,SYN-EV-13-001
+EV-13,M1,2026-01-01,,soil,Cadmium,,901,mg/kg,,0.1,SYN-EV-13-002
+EV-13,M1,2026-01-01,,soil,Lead,,2000,mg/kg,<,2000,SYN-EV-13-003
+EV-13,M2,2026-01-01,,soil,Nickel,,7000000,ug/kg,,0.1,SYN-EV-13-004
+EV-13,M2,2026-01-01,,soil,Zinc,,5,mg/L,,0.1,SYN-EV-13-005
+EV-13,M2,2026-01-01,,soil,Toluene,,1,mg/kg,,0.1,SYN-EV-13-006
+EV-13,M3,2026-01-01,,soil,Hexavalent Chromium,,3601,mg/kg,,0.1,SYN-EV-13-007
+EV-13,M3,2026-01-01,,soil,Copper,,300000,mg/kg,,0.1,SYN-EV-13-008
+EV-13,M3-DUP,2026-01-01,,soil,Copper,,200000,mg/kg,,0.1,SYN-EV-13-009

@@ -1,0 +1,16 @@
+{
+  "criteria_set": "hil-a-residential",
+  "exceedances": [],
+  "not_screened": [
+    {
+      "sample_id": "S1",
+      "analyte": "Lead",
+      "reason": "unit_mismatch"
+    },
+    {
+      "sample_id": "S1",
+      "analyte": "Nickel",
+      "reason": "unit_mismatch"
+    }
+  ]
+}

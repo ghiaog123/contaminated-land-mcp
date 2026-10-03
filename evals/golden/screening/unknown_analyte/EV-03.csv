@@ -1,0 +1,5 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-03,S1,2026-01-01,,soil,Atrazine,,5,mg/kg,,0.1,SYN-EV-03-001
+EV-03,S1,2026-01-01,,soil,Pyrene,,3,mg/kg,,0.1,SYN-EV-03-002
+EV-03,S1,2026-01-01,,soil,Lead,,100,mg/kg,,0.1,SYN-EV-03-003

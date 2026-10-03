@@ -1,0 +1,29 @@
+analyte,cas_no,criterion,unit,matrix,land_use,soil_type,depth_band,source_doc_id,page,table_ref,notes
+Toluene,108-88-3,160,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),
+Toluene,108-88-3,220,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),
+Toluene,108-88-3,310,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),
+Toluene,108-88-3,540,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),
+Ethylbenzene,100-41-4,55,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),
+Ethylbenzene,100-41-4,,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Ethylbenzene,100-41-4,,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Ethylbenzene,100-41-4,,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Xylenes,1330-20-7,40,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),
+Xylenes,1330-20-7,60,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),
+Xylenes,1330-20-7,95,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),
+Xylenes,1330-20-7,170,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),
+Naphthalene,91-20-3,3,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),
+Naphthalene,91-20-3,,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Naphthalene,91-20-3,,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Naphthalene,91-20-3,,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),NL = not limiting (Table 1A(3) Footnote 5)
+Benzene,71-43-2,0.5,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),
+Benzene,71-43-2,0.5,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),
+Benzene,71-43-2,0.5,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),
+Benzene,71-43-2,0.5,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),
+F1,,45,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),Footnote 9: F1 = C6-C10 fraction minus sum of BTEX
+F1,,70,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),Footnote 9: F1 = C6-C10 fraction minus sum of BTEX
+F1,,110,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),Footnote 9: F1 = C6-C10 fraction minus sum of BTEX
+F1,,200,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),Footnote 9: F1 = C6-C10 fraction minus sum of BTEX
+F2,,110,mg/kg,soil,HSL A & HSL B,sand,0 m to <1 m,nepm-asc-b1,60,Table 1A(3),Footnote 10: F2 = >C10-C16 fraction minus naphthalene
+F2,,240,mg/kg,soil,HSL A & HSL B,sand,1 m to <2 m,nepm-asc-b1,60,Table 1A(3),Footnote 10: F2 = >C10-C16 fraction minus naphthalene
+F2,,440,mg/kg,soil,HSL A & HSL B,sand,2 m to <4 m,nepm-asc-b1,60,Table 1A(3),Footnote 10: F2 = >C10-C16 fraction minus naphthalene
+F2,,,mg/kg,soil,HSL A & HSL B,sand,4 m+,nepm-asc-b1,60,Table 1A(3),Footnote 10: F2 = >C10-C16 fraction minus naphthalene; NL = not limiting (Table 1A(3) Footnote 5)

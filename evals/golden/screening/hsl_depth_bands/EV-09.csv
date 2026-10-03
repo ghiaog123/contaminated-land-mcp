@@ -1,0 +1,9 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-09,D0.99,2026-01-01,0.99,soil,Toluene,,200,mg/kg,,0.1,SYN-EV-09-001
+EV-09,D1.00,2026-01-01,1.0,soil,Toluene,,200,mg/kg,,0.1,SYN-EV-09-002
+EV-09,D1.99,2026-01-01,1.99,soil,Toluene,,230,mg/kg,,0.1,SYN-EV-09-003
+EV-09,D2.00,2026-01-01,2.0,soil,Toluene,,230,mg/kg,,0.1,SYN-EV-09-004
+EV-09,D3.99,2026-01-01,3.99,soil,Toluene,,320,mg/kg,,0.1,SYN-EV-09-005
+EV-09,D4.00,2026-01-01,4.0,soil,Toluene,,500,mg/kg,,0.1,SYN-EV-09-006
+EV-09,D4.50,2026-01-01,4.5,soil,Toluene,,600,mg/kg,,0.1,SYN-EV-09-007

@@ -1,0 +1,10 @@
+analyte,cas_no,criterion,unit,matrix,land_use,soil_type,depth_band,source_doc_id,page,table_ref,notes
+Arsenic,7440-38-2,3000,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),Footnote 2: assumes 70% oral bioavailability
+Cadmium,7440-43-9,900,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),
+Chromium (VI),18540-29-9,3600,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),
+Copper,7440-50-8,240000,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),
+Lead,7439-92-1,1500,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),Footnote 3: based on blood lead models
+Mercury (inorganic),7439-97-6,730,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),Footnote 5: does not address elemental mercury
+Nickel,7440-02-0,6000,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),
+Zinc,7440-66-6,400000,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),
+Carcinogenic PAHs (as BaP TEQ),,40,mg/kg,soil,HIL D,,,nepm-asc-b1,56,Table 1A(1),Footnote 6: sum of 8 carcinogenic PAHs weighted by BaP TEF

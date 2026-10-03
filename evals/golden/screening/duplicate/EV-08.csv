@@ -1,0 +1,6 @@
+# SYNTHETIC EVAL FIXTURE
+site_id,sample_id,sampled_date,depth_m,matrix,analyte,cas_no,result,unit,qualifier,lor,lab_ref
+EV-08,BH01-0.5,2026-01-01,0.5,soil,Lead,,350,mg/kg,,0.1,SYN-EV-08-001
+EV-08,BH01-0.5-DUP,2026-01-01,0.5,soil,Lead,,330,mg/kg,,0.1,SYN-EV-08-002
+EV-08,BH01-0.5,2026-01-01,0.5,soil,Arsenic,,50,mg/kg,,0.1,SYN-EV-08-003
+EV-08,BH01-0.5-DUP,2026-01-01,0.5,soil,Arsenic,,120,mg/kg,,0.1,SYN-EV-08-004
