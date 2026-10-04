@@ -35,7 +35,7 @@ Prices per million tokens, input / output, re-read from the OpenRouter catalog 2
 |---|---|
 | `deepseek/deepseek-v4.1-flash` | 0.30 / 1.20 at the last check (image input supported); see the note above |
 | `stealth/space-bunny-alpha` | 0 / 0 (image input, 1M context). Used by the owner for local runs via `CONTAMINATED_LAND_MODEL` in `.env`. The catalog lists an expiry of 2026-10-05; after that `CONTAMINATED_LAND_MODEL` must go back to DeepSeek. Stealth models may log prompts; the demo data is fictional and redacted and the guidance documents are public |
-| `google/gemini-3.5-flash-lite` | 0.30 / 2.50. Eval judge, provisional (Q12) |
+| `google/gemini-3.5-flash-lite` | 0.30 / 2.50. Eval judge, provisional |
 | `deepseek/deepseek-v4-pro` | 0.21 / 0.42 |
 | `deepseek/deepseek-v4-flash` | 0.028 / 0.056 |
 | `anthropic/claude-sonnet-5.5` | 2 / 10 |

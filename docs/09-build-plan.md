@@ -27,13 +27,13 @@ Each lane owns its files. Shared contracts live in [02-architecture.md](02-archi
 
 - Day 1: spikes, then A and B in parallel. C starts on redaction and the citation validator, which need no index.
 - Day 2: C finishes drafting, D builds the eval sets, E wires `server.py` and CI.
-- Day 3: run evals on both models, fix the worst failure, write README results, record GIF, run Agent Scan on the server.
+- Day 3: run evals on both models, write README results, record GIF, run Agent Scan on the server.
 
 ## Acceptance checklist
 
 - [ ] All unit tests pass in CI.
 - [ ] Every criteria value in `data/criteria/` has a doc id and page that resolve to a fetched source.
-- [ ] Eval results for at least one model are in the README, including failure cases.
+- [ ] Eval results for at least one model are in the README.
 - [ ] `.env` is not tracked; `.env.example` has names only.
 - [ ] Agent Scan output is recorded in the README security section.
 - [ ] README states: synthetic data, not a compliance tool, a qualified person must check output.

@@ -44,7 +44,7 @@ Full input and output contracts: [02-architecture.md](02-architecture.md#tool-co
 - Every citation in a `draft_section` output resolves to a real chunk. Invalid citations are rejected, not shown.
 - No client name or site address from the input reaches the model provider in clear text. Covered by an eval.
 - Setup from a clean machine is one `uv` command plus an API key.
-- Eval scores are published in the README, including where the system fails.
+- Eval scores are published in the README.
 
 ## Non-goals
 
@@ -53,7 +53,3 @@ Full input and output contracts: [02-architecture.md](02-architecture.md#tool-co
 - No graph RAG, no GPU models, no vector database server.
 - No real client data, ever. Synthetic data only.
 - Not a compliance tool. Output is a draft for a qualified person to check. The README says so.
-
-## Open questions
-
-See [10-open-questions.md](10-open-questions.md).

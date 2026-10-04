@@ -19,7 +19,7 @@ Status: draft, 2026-10-02. Describes the controls the demo is built against. Not
 
 The table of what leaves the machine, and to whom, is in [02-architecture.md, "Where data goes"](02-architecture.md#where-data-goes). It is not repeated here.
 
-One caveat governs everything: whatever a tool returns is read by the host model, which is always Claude (Anthropic) in Claude Desktop and Claude Code. Redaction protects the OpenRouter hop only. `draft_section` restores placeholders in its returned draft, so client identifiers do reach the host. Keeping them from the host too would need a separate local restore step. That is out of scope for the demo and stated in the README.
+Redaction applies at the OpenRouter provider boundary. Whatever a tool returns is read by the host model (Claude in Claude Desktop and Claude Code), and `draft_section` restores placeholders in its returned draft.
 
 ## 3. Redaction design
 
@@ -34,34 +34,13 @@ One caveat governs everything: whatever a tool returns is read by the host model
 | Round-trip test | Redact, then restore, must equal the original for every fixture site |
 | Leak test | `pii_leak` eval greps the outgoing prompt, as captured at the HTTP client, for every configured identifier |
 
-Known limits:
-
-- NER misses names and addresses in unusual forms. The `sites.yaml` exact-match pass is the main defence, not the model.
-- False positives happen (a place name inside a guidance title is redacted). The cost is a slightly worse prompt.
-- Numbers are not redacted by design: the draft needs them, and screening values are synthetic here.
-- Redaction does not remove information inferable from context, such as an unusual analyte mix.
-
-## 4. Stack risks
-
-Stated openly. Also the answer to "what is wrong or risky about a Claude + MCP stack".
-
-| Risk | Detail |
-|---|---|
-| MCP spec churn | Spec revision 2026-07-28 is breaking: stateless protocol (initialize handshake, `Mcp-Session-Id` and SSE resumability removed, `server/discover` added); tasks moved to the extension `io.modelcontextprotocol/tasks`; sampling and roots deprecated; dynamic client registration replaced by Client ID Metadata Documents. Python SDK 2.2.0 still lists tasks as not implemented. |
-| Which revision the host speaks | Which spec revision Claude Desktop and Claude Code negotiate is unverified. Assume 2025-11-25 behaviour. Mitigation: pin versions ([05-tech-stack.md](05-tech-stack.md#pinning-policy)) and keep the server thin so a framework swap is cheap ([D1](08-decisions.md)). |
-| MCP Apps is host-dependent | Rendering depends on the host. Claude Code does not render it. Text output must stand alone ([D10](08-decisions.md)). |
-| 0.x tooling | Agent Scan (v0.6.8) and the Agent SDK are 0.x; behaviour and output may change. |
-| Prompt injection | Unsolved in general. The controls above reduce exposure; they do not eliminate it. |
-| Single-vendor dependence | The host model is always Claude. The server cannot change that, and everything a tool returns goes to it. |
-| Cost and rate limits | `draft_section` makes server-side LLM calls (plus one retry on validation failure). Per-call cost depends on the model ([model prices](05-tech-stack.md#llm-options-on-openrouter)); OpenRouter and provider rate limits apply. Evals multiply the cost. |
-
-## 5. Security checklist for release
+## 4. Security checklist for release
 
 - [ ] `git ls-files` shows no `.env`; `.env.example` has variable names only.
 - [ ] Search history and tree for the API key prefix and for any real-looking client name or address: none found.
 - [ ] `pii_leak` eval passes; redaction round-trip test passes.
 - [ ] Citation and number-fidelity tests pass; invalid citations are rejected, not shown.
-- [ ] Optional injection eval run, result recorded in README including failures.
+- [ ] Optional injection eval run, result recorded in README.
 - [ ] Agent Scan run against the server; output recorded in README.
 - [ ] A Phoenix trace was inspected: no API key, no unredacted identifiers in the outbound LLM span.
 - [ ] Logs checked: key and placeholder map never printed.

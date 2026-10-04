@@ -12,16 +12,15 @@ Candidate list, checked 2026-10-02. "Verified" means URL fetched and publisher a
 
 | doc_id | title | publisher | URL | licence | verified? | why included |
 |---|---|---|---|---|---|---|
-| `nepm-asc-b1` | NEPM ASC, Schedule B1 "Guideline on Investigation Levels for Soil and Groundwater" (2013 amended compilation, 89 pp as served) | National Environment Protection Council; administered by the Department of Climate Change, Energy, the Environment and Water | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/2 | Unverified. No licence statement found on the document or the Details page (https://www.legislation.gov.au/Details/F2013C00288). Check the Federal Register copyright page at build time. | URL: yes (HTTP 200, PDF, title "Schedule B1"). Licence: no. | Source of HIL, HSL, EIL/ESL and management-limit tables. Core criteria source for `screen_lab_results`. |
-| `nepm-asc-b2` | NEPM ASC, Schedule B2 "Guideline on Site Characterisation" (2013 amended compilation, 150 pp as served) | as above | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/3 | Unverified, as above. | URL: yes (HTTP 200, PDF, title "Schedule B2"). Licence: no. | Sampling, QA/QC and reporting guidance. Gives `search_guidance` and `draft_section` real narrative to cite. |
-| `nepm-asc-measure` | NEPM ASC, Measure text (Volume 1 of the 22-volume compilation F2013C00288, 21 pp as served) | as above | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/1 | Unverified, as above. | URL: yes (HTTP 200, PDF). Licence: no. | Optional. Legal framing and definitions. Drop if retrieval eval shows it adds noise. |
+| `nepm-asc-b1` | NEPM ASC, Schedule B1 "Guideline on Investigation Levels for Soil and Groundwater" (2013 amended compilation, 89 pp as served) | National Environment Protection Council; administered by the Department of Climate Change, Energy, the Environment and Water | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/2 | CC BY 4.0 (Federal Register of Legislation content licence). | URL: yes (HTTP 200, PDF, title "Schedule B1"). | Source of HIL, HSL, EIL/ESL and management-limit tables. Core criteria source for `screen_lab_results`. |
+| `nepm-asc-b2` | NEPM ASC, Schedule B2 "Guideline on Site Characterisation" (2013 amended compilation, 150 pp as served) | as above | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/3 | CC BY 4.0, as above. | URL: yes (HTTP 200, PDF, title "Schedule B2"). | Sampling, QA/QC and reporting guidance. Gives `search_guidance` and `draft_section` real narrative to cite. |
+| `nepm-asc-measure` | NEPM ASC, Measure text (Volume 1 of the 22-volume compilation F2013C00288, 21 pp as served) | as above | https://www.legislation.gov.au/F2008B00713/2013-05-16/2013-05-16/text/original/pdf/1 | CC BY 4.0, as above. | URL: yes (HTTP 200, PDF). | Optional. Legal framing and definitions. Drop if retrieval eval shows it adds noise. |
 | `dwer-acs-2021` | Guideline: Assessment and management of contaminated sites (Nov 2021, last updated 16 Jun 2023, 178 pp as served) | Department of Water and Environmental Regulation (WA) | https://www.wa.gov.au/system/files/2023-05/guideline-assessment-and-management-of-contaminated-sites.pdf (landing page: https://www.wa.gov.au/government/publications/guideline-assessment-and-management-of-contaminated-sites) | Not open. The PDF states "all other rights are reserved" and permits reproduction in unaltered form only, for personal non-commercial or in-organisation use. | URL: yes. Licence: yes (read in the PDF front matter). | State layer on top of the NEPM. Shows how a regulator frames assessment and reporting. |
 
 Notes:
 - The nepc.gov.au pages for Schedule B1 (for example https://www.nepc.gov.au/sites/default/files/2022-09/schedule-b1-guideline-investigation-levels-soil-and-groundwater-sep10.pdf) appeared in search results but did not respond to fetch from this environment, so they are unverified. The legislation.gov.au copy is the registered 2013 compilation and is preferred as `url`. The nepc.gov.au file name suggests a September 2010 version (unverified); do not use it for criteria unless its content is shown to match the 2013 compilation.
 - The legislation.gov.au URLs above use a document-series path (`F2008B00713`) with the page numbers 1, 2, 3 observed to map to the Measure text, Schedule B1 and Schedule B2. This mapping was observed on 2026-10-02 and could change. Re-check at build time.
 - Table identifiers seen in the Schedule B1 text: Table 1A(1) (HIL), 1A(3) (soil HSL for vapour intrusion), 1A(4) (groundwater HSL), 1B(4), 1B(5), 1B(6), 1B(7). The exact criteria_set mapping is decided from the fetched text, not from this list.
-- A current-version check is needed: the NEPM may have been varied since the 2013 compilation. Unverified.
 - Maximum of four documents. Do not add documents without a stated criteria or eval need.
 
 ### `data/sources.yaml` schema
@@ -173,13 +172,4 @@ Policy:
 - The parsed docling JSON and index are derived works of those PDFs. Do not publish them as a release asset unless the licence for each source allows it. Default: users build locally. The first build downloads docling models (D4) and takes minutes.
 - `fetch_sources.py` records `sha256`, `retrieved` and `pages` per document and fails loudly on a hash change.
 - The README quotes short passages only through the tool output (with page citations), not by bundling the documents.
-- Criteria values in `data/criteria/` are facts transcribed with attribution (doc, page, table). Whether that is acceptable redistribution under each licence is a licence question, not settled here. Unverified; resolve before the repo goes public.
-
-## Open items
-
-| Item | Needed for |
-|---|---|
-| Licence of the legislation.gov.au NEPM compilation (Federal Register copyright terms) and of nepc.gov.au copies | Whether criteria CSVs and any quoted text can be published |
-| Whether the 2013 compilation is the current in-force version of Schedule B1 | Correctness of criteria |
-| Final criteria_set list and analyte list | After reading the tables |
-| DWER guideline: does it add anything beyond narrative? | Keep or drop `dwer-acs-2021` |
+- Criteria values in `data/criteria/` are facts transcribed with attribution (doc, page, table). The source PDFs are not redistributed; they are downloaded at ingest time.

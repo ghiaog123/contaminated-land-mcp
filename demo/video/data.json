@@ -217,7 +217,7 @@
     }
   ],
   "scoreboard": {
-    "_source": "evals/manual_review_2026-10-03.md (Summary, Regression check); README.md eval table",
+    "_source": "README.md eval table; evals/README.md",
     "title": "evals, 2026-10-03",
     "rows": [
       {

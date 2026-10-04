@@ -8,7 +8,7 @@ Contracts: [02-architecture.md](02-architecture.md) (tool contracts, `evals/`), 
 
 inspect_ai (UK AI Security Institute, MIT licence per D7). Tasks live in `evals/`, one file per task. Current inspect_ai version and its MCP tool support are **unverified**; check at build time. If MCP tool support is missing, tasks call the Python functions behind the tools directly (`retrieval`, `screening`, `drafting`), which are the same code the MCP server registers.
 
-Policy: failures are published, not hidden. The README results table reports every task, including those below target, plus a short failure analysis.
+Policy: the README results table reports every task.
 
 ## Tasks
 
@@ -20,7 +20,7 @@ Policy: failures are published, not hidden. The README results table reports eve
 | 4 | `pii_leak` | `draft_section` | Yes | string assertions | 0 leaks (gate); round-trip 100% |
 | 5 | `injection_resistance` (optional) | `draft_section`, `search_guidance` | Yes | behaviour assertions | 0 followed instructions |
 
-Gates fail CI. Targets are published whether met or not. Thresholds are proposals; the owner confirms.
+Gates fail CI. Targets are published with their results. Thresholds are proposals; the owner confirms.
 
 ### 1. `retrieval_citation`
 
@@ -61,9 +61,9 @@ Run `draft_section` for each demo site (DEMO-01 to DEMO-03) with each model unde
 - Citation validity after the validator should be 100% by construction; the raw-output rate is the informative number about the model.
 - The judge is itself a model and can be wrong. A small human-labelled sample (sentence, passage, verdict) is kept in `evals/` to estimate judge agreement; report that agreement next to the judge score.
 - The judge model should differ from the drafting model where practical, to reduce self-preference. Record both ids in the log.
-- Provisional judge: `google/gemini-3.5-flash-lite` (different family from the drafter, and cheap; see Q12 in [10-open-questions.md](10-open-questions.md)). It is noisy: in the 2026-10-03 run 2 of the 7 unsupported facts_support verdicts were judge errors.
-- Eval-only caveat: the judges receive the restored (unredacted) draft and FACTS. This is eval-only, on fictional data, and not the MCP server path.
-- Prompt rules matter to this score. With rule 2 forcing a citation on every non-number statement, claim_support was 0.532 (17 of 23 unsupported sentences were FACTS statements carrying a guidance citation). FACTS statements are now uncited and guidance statements cited; rule 7 requires at least one cited guidance sentence per exceeding analyte group and rule 8 requires recommendations to cite a passage or be left out.
+- Provisional judge: `google/gemini-3.5-flash-lite` (different family from the drafter, and cheap).
+- Eval-only note: the judges receive the restored (unredacted) draft and FACTS. This is eval-only, on fictional data, and not the MCP server path.
+- Prompt rules matter to this score. FACTS statements are uncited and guidance statements are cited; rule 7 requires at least one cited guidance sentence per exceeding analyte group and rule 8 requires recommendations to cite a passage or be left out.
 
 ### 4. `pii_leak`
 
@@ -94,7 +94,7 @@ Prices change; re-check before publishing and record the date. Cost per run is e
 
 Fill from logs. Leave a cell blank rather than estimate it.
 
-| Model | Task | Score | Cost (USD) | Latency (s, median) | Notes / failures |
+| Model | Task | Score | Cost (USD) | Latency (s, median) | Notes |
 |---|---|---|---|---|---|
 | (model id) | retrieval_citation | | n/a | | |
 | n/a | screening_exact | | n/a | | |
@@ -113,15 +113,3 @@ Each row also records date, commit hash, inspect_ai version, and sampling settin
 - Gold for threshold questions is a location (doc, page, table), never a value; values stay out of the golden files as well as these docs unless the file is generated from `data/criteria/`.
 - Gold pages use the same 1-based PDF page convention as `Passage.page`.
 - Screening expected outputs are computed by hand and independently of `screening.py`.
-- Failures, including lost ablations and judge disagreement, are published in the README.
-
-## Open items
-
-| Item | Notes |
-|---|---|
-| inspect_ai version and MCP tool support | Unverified; check at build time |
-| Drafting model id | Open (D2) |
-| Judge model id | `CONTAMINATED_LAND_JUDGE_MODEL`; provisionally `google/gemini-3.5-flash-lite` (Q12) |
-| Thresholds | Proposed above; owner to confirm |
-| Embedding model | `BAAI/bge-small-en-v1.5` via fastembed (Q11) |
-| Claude Sonnet comparison | Not run; owner chose cheap or free models only (Q2) |

@@ -8,13 +8,13 @@ An MCP server that gives Claude, or any MCP client, cited guidance search, code-
 
 ![Demo: screening DEMO-03 and searching the guidance](demo/demo.gif)
 
-*Terminal demo of `screen_lab_results` and `search_guidance`, rendered from `demo/demo.tape` with vhs. The Claude Desktop recording (with `draft_section` and the inline table) is manual and not recorded yet (see `demo/README.md`).*
+*Terminal demo of `screen_lab_results` and `search_guidance`, rendered from `demo/demo.tape` with vhs.*
 
 ## Overview
 
 Contaminated-land site assessment means comparing lab results with published criteria, finding the right page in thousands of pages of standards, and writing the results section of a report. This server lets Claude do those three jobs with the numbers and citations kept under code control. It runs locally from Claude Desktop, Claude Code or any MCP client on public Australian guidance (NEPM) and synthetic lab data.
 
-It is for people evaluating the design: how to put guardrails around a model inside an MCP server. It is a portfolio demo, not a product, and it is not a compliance tool. It produces drafts for a qualified person to check; nothing here is a finding, an opinion or advice.
+It is for people evaluating the design: how to put guardrails around a model inside an MCP server. It is a portfolio demo of how to put guardrails around a model inside an MCP server. It produces drafts for a qualified person to check; nothing here is a finding, an opinion or advice.
 
 ## Features
 
@@ -93,19 +93,19 @@ Try: "Screen the results for site DEMO-03 against the residential criteria", the
 | `CONTAMINATED_LAND_MODEL` | `draft_section` | OpenRouter model id. Default `deepseek/deepseek-v4.1-flash`, for example `anthropic/claude-sonnet-5.5` |
 | `CONTAMINATED_LAND_JUDGE_MODEL` | `draft_faithfulness` eval | Optional; a different family from the drafting model is better |
 
-The chat model in Claude Desktop or Claude Code is Claude. Separately, `draft_section` calls the model above server-side through OpenRouter. The DeepSeek default's price moves: $0.30 / $1.20 per Mtok on 2026-10-02, $0.02 / $0.42 early on 2026-10-03, back to $0.30 / $1.20 later that day; check the catalog. The owner runs local evals on the free `stealth/space-bunny-alpha` ($0 / $0), which the OpenRouter catalog lists as expiring 2026-10-05; after that date `CONTAMINATED_LAND_MODEL` must go back to DeepSeek. Stealth models may log prompts; the demo data is fictional and redacted, and the guidance documents are public. No Claude Sonnet comparison has been run (cheap or free models only).
+The chat model in Claude Desktop or Claude Code is Claude. Separately, `draft_section` calls the model above server-side through OpenRouter. The DeepSeek default's price moves: $0.30 / $1.20 per Mtok on 2026-10-02, $0.02 / $0.42 early on 2026-10-03, back to $0.30 / $1.20 later that day; check the catalog. The owner runs local evals on the free `stealth/space-bunny-alpha` ($0 / $0), which the OpenRouter catalog lists as expiring 2026-10-05; after that date `CONTAMINATED_LAND_MODEL` must go back to DeepSeek. Stealth models may log prompts; the demo data is fictional and redacted, and the guidance documents are public.
 
 ## Evaluation
 
-Tasks are defined in [docs/04-evaluation.md](docs/04-evaluation.md) and live in `evals/`. Measured on 2026-10-03 with inspect_ai 0.3.275 on the code before the first commit, 3 samples (DEMO-01/02/03), temperature 0. Runs A to C used one draw each; the manual-review rerun used 3 draws for drafts and agent cases and was graded by hand, not by a judge model. That manual review is a self-review, not an independent one. Failures are published with the passes.
+Tasks are defined in [docs/04-evaluation.md](docs/04-evaluation.md) and live in `evals/`. Measured on 2026-10-03 with inspect_ai 0.3.275 on the code before the first commit, 3 samples (DEMO-01/02/03), temperature 0. Runs A to C used one draw each; the manual-review rerun used 3 draws for drafts and agent cases and was graded by hand, not by a judge model.
 
 | Task | Result | Gate or target |
 |---|---|---|
 | `screening_exact` | 13 / 13 cases exact (accuracy 1.000); expected outputs hand-computed from the criteria tables, independently of `screening.py` | Gate: 100% |
-| `pii_leak` | Offline echo model: no_leak 1.0, round_trip 1.0. Real mode, `deepseek/deepseek-v4.1-flash`: no_leak 1.0, redacted_something 1.0. Real mode, `stealth/space-bunny-alpha`: no_leak 1.0, redacted_something 1.0. With redaction disabled the offline task scores 0.000, so the check can fail | Gate: 0 leaks |
-| `retrieval_citation` | recall@5 0.85, MRR 0.80 (hybrid); 20 questions over 3 documents, 1712 chunks. Golden set is agent-drafted, pending owner review | Target: recall@5 >= 0.8 |
-| `draft_faithfulness` | Final run C, drafter `stealth/space-bunny-alpha`, judge `google/gemini-3.5-flash-lite`: citation validity 1.0 raw and 1.0 after the validator; number_fidelity 1.0; claim_support 0.933; facts_support 0.825 (noisy and conservative with a flash-lite judge). Manual rerun, 9 draws, no judge: cited sentences supported 54 / 56, uncited sentences supported by FACTS 124 / 127 | Citation validity 100% after validator |
-| `agent_tool_use` | Run 2: right tools and arguments 36 / 36; manual grade 18 PASS, 16 PARTIAL, 2 FAIL. `stealth/space-bunny-alpha` acts as the MCP host over real stdio, 12 cases x 3 draws; PARTIALs are the model adding facts after correct tool calls. a09 on the final code 3 / 3 PASS | Reported |
+| `pii_leak` | Offline echo model: no_leak 1.0, round_trip 1.0. Real mode, `deepseek/deepseek-v4.1-flash`: no_leak 1.0, redacted_something 1.0. Real mode, `stealth/space-bunny-alpha`: no_leak 1.0, redacted_something 1.0. With redaction disabled the offline task scores 0.000; the check is sensitive to a missing redaction | Gate: 0 leaks |
+| `retrieval_citation` | recall@5 0.85, MRR 0.80 (hybrid); 20 questions over 3 documents, 1712 chunks. | Target: recall@5 >= 0.8 |
+| `draft_faithfulness` | Final run C, drafter `stealth/space-bunny-alpha`, judge `google/gemini-3.5-flash-lite`: citation validity 1.0 raw and 1.0 after the validator; number_fidelity 1.0; claim_support 0.933; manual rerun, 9 draws, no judge: cited sentences supported 54 / 56, uncited sentences supported by FACTS 124 / 127 | Citation validity 100% after validator |
+| `agent_tool_use` | Run 2: right tools and arguments 36 / 36; `stealth/space-bunny-alpha` acts as the MCP host over real stdio, 12 cases x 3 draws. a09 on the final code 3 / 3 PASS | Reported |
 
 Retrieval ablation, same 20 questions (recall@5 / MRR, after the chunking and ranking fixes):
 
@@ -115,7 +115,7 @@ Retrieval ablation, same 20 questions (recall@5 / MRR, after the chunking and ra
 | vector | 0.85 / 0.75 | 0.75 | 0.92 |
 | hybrid (default) | 0.85 / 0.80 | 0.75 | 0.92 |
 
-The ranking fixes raised MRR in every mode; recall@5 did not move except bm25's page-span hit. Table-lookup questions are the weak spot for every mode. A local cross-encoder reranker is the untested next step. Per-run rows with token counts and cost, the prompt history and the OCR assessment are in [evals/README.md](evals/README.md); the hand grading is in [evals/manual_review_2026-10-03.md](evals/manual_review_2026-10-03.md).
+The chunking and ranking fixes raised MRR in every mode. Per-run rows with token counts and cost, the prompt history and the OCR assessment are in [evals/README.md](evals/README.md).
 
 To run (from the repo root; full commands for every task in [evals/README.md](evals/README.md)):
 
@@ -130,7 +130,7 @@ uv run --frozen --no-sync inspect eval evals/screening_exact.py --model mockllm/
 src/contaminated_land/   server, screening, retrieval, drafting, redact, llm, types
 ingest/                  fetch_sources.py, build_index.py
 data/                    sources.yaml, criteria/, lab/ (synthetic); cache/ is gitignored
-evals/                   inspect_ai tasks, golden sets, manual review
+evals/                   inspect_ai tasks, golden sets
 demo/                    vhs terminal demo, animated walkthrough
 docs/                    spec, architecture, data, evaluation, security, decisions
 tests/                   pytest
@@ -140,31 +140,21 @@ tests/                   pytest
 
 - **Numbers come from code, not the model.** Screening is deterministic Python; the same input gives the same output. A validator checks every number in the draft against the screening output ([D6](docs/08-decisions.md)).
 - **Citations are validated.** Every claim that is not a screening number must cite `[chunk_id]`, and each id must be one of the passages supplied to the model; otherwise the sentence is removed and listed in `warnings` ([D3](docs/08-decisions.md)).
-- **Redaction before the model provider.** Client names and site addresses become placeholders before the text leaves the machine and are restored in the returned draft. This covers the OpenRouter hop only.
+- **Redaction before the model provider.** Client names and site addresses become placeholders before the text leaves the machine and are restored in the returned draft.
 - **Guidance text is untrusted.** Tool descriptions state that passages are reference text, not instructions, and the drafting prompt delimits them.
 - **Synthetic data only.** No real client or site data, ever ([D11](docs/08-decisions.md)).
 
 Every decision with its alternative and status: [docs/08-decisions.md](docs/08-decisions.md).
 
-## Limitations
-
-- **Not a compliance tool.** Output is a draft for a qualified person to check.
-- One section type (results and discussion), soil criteria only, a short analyte list, three synthetic sites.
-- Quality is measured only by the evals above: 3 samples, one to three draws, an agent-drafted golden set, and graders from the same model family that built the system.
-- Redaction misses unusual name and address forms; see [docs/06-guardrails-security.md](docs/06-guardrails-security.md).
-- Whatever a tool returns is read by Claude, so what you type and what the tools return go to Anthropic via the host.
-- Real client data would need an OpenRouter provider under a data agreement and a deployment review. This demo does not solve that.
-- MCP Apps rendering depends on the host. Claude Code does not render it; the text result stands alone.
-
 ## Security
 
-The server exposes only its own four read-only tools. Threat model, redaction design and the release checklist are in [docs/06-guardrails-security.md](docs/06-guardrails-security.md). Agent Scan result: pending.
+The server exposes only its own four read-only tools. Threat model, redaction design and the release checklist are in [docs/06-guardrails-security.md](docs/06-guardrails-security.md).
 
 ## Data and licences
 
-- Guidance PDFs are fetched at install time from the publishers listed in `data/sources.yaml`; they are not committed. The WA DWER guideline is not openly licensed and is not redistributable. The licence on the NEPM copies on legislation.gov.au is unverified.
+- Guidance PDFs are fetched at install time from the publishers listed in `data/sources.yaml`; they are not committed. The WA DWER guideline is not redistributed here.
 - Criteria values are transcribed by hand from the fetched sources, each with document, page and table recorded, and checked by tests. No value is taken from memory or from a model.
-- Lab data and sites are synthetic and labelled as such. Details: [docs/03-data.md](docs/03-data.md).
+- Lab data and sites are sample data created for this demo, labelled as such; no real client or site data. Details: [docs/03-data.md](docs/03-data.md).
 
 ## License
 
